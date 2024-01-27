@@ -7,3 +7,23 @@
 .woodwarrior {
     font-family: 'Woodwarrior', sans-serif;
 }
+
+* {
+    position: relative;
+}
+
+:root {
+    --color-1: #241f21;
+    --color-2: #827f80;
+    --color-3: #f4f3ee;
+    --color-4: #a52422;
+    --color-5: #2C2729;
+}
+
+body {
+    background-color: var(--color-1);
+}
+
+.bg-color-5 {
+    background-color: var(--color-5);
+}

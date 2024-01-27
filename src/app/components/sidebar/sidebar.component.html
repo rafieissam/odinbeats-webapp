@@ -1,8 +1,11 @@
-<div class="container py-4">
-    <app-logo></app-logo>
+<div class="h-full py-6 bg-color-5">
+    <div class="px-6">
+        <app-logo></app-logo>
+    </div>
     <div class="mt-16">
+        <div class="px-6 my-3 text-white cursor-pointer font-bold border-l-4 border-white">test</div>
         @for (b of a; track b) {
-            <div class="px-4 py-2">{{ b }}</div>
+            <div class="px-6 py-2 my-2 text-white cursor-pointer">{{ b }}</div>
         }
     </div>
 </div>
