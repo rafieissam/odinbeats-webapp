@@ -1,0 +1,1 @@
+export type RepeatMode = "all" | "one" | "off";

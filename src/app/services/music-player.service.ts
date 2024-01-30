@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { RepeatMode } from '../interfaces/types';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class MusicPlayerService {
   volume: number = 50;
   isMuted: boolean = false;
 
-  repeatMode: "all" | "one" | "off" = "off";
+  repeatMode: RepeatMode = "off";
   isShuffling: boolean = false;
 
   constructor() {
@@ -65,7 +66,7 @@ export class MusicPlayerService {
     this.isShuffling = state;
   }
 
-  setRepeatMode(repeatMode: typeof this.repeatMode) {
+  setRepeatMode(repeatMode: RepeatMode) {
     this.repeatMode = repeatMode;
     let endFunc;
     switch (this.repeatMode) {

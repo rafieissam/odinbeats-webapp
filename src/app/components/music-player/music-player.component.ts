@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { MusicPlayerService } from '../../services/music-player.service';
 import { VolumeControlComponent } from '../volume-control/volume-control.component';
 import { PlaybackControlComponent } from '../playback-control/playback-control.component';
+import { RepeatMode } from '../../interfaces/types';
 
 @Component({
   selector: 'app-music-player',
@@ -87,7 +88,7 @@ export class MusicPlayerComponent implements OnInit {
     this.musicPlayerService.setShuffle(state);
   }
 
-  onRepeat(repeatMode: "all" | "one" | "off") {
+  onRepeat(repeatMode: RepeatMode) {
     this.musicPlayerService.setRepeatMode(repeatMode);
   }
 

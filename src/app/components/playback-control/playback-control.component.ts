@@ -3,6 +3,7 @@ import { Component, ElementRef, EventEmitter, HostListener, Input, Output, ViewC
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { jamPlay, jamPause, jamVolumeDown, jamVolumeUp, jamVolume, jamVolumeMute, jamSetForward, jamSetBackward, jamShuffle, jamRepeat } from '@ng-icons/jam-icons';
 import { DurationToMinsPipe } from '../../pipes/duration-to-mins.pipe';
+import { RepeatMode } from '../../interfaces/types';
 
 @Component({
   selector: 'app-playback-control',
@@ -28,7 +29,7 @@ export class PlaybackControlComponent {
   @Output('next') nextTrigger: EventEmitter<void> = new EventEmitter<void>();
   @Output('prev') prevTrigger: EventEmitter<void> = new EventEmitter<void>();
   @Output('shuffle') shuffleChange: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Output('repeat') repeatChange: EventEmitter<"all" | "one" | "off"> = new EventEmitter<"all" | "one" | "off">();
+  @Output('repeat') repeatChange: EventEmitter<RepeatMode> = new EventEmitter<RepeatMode>();
   @Output('seek') seekChange: EventEmitter<number> = new EventEmitter<number>();
 
   private isSeeking = false;
