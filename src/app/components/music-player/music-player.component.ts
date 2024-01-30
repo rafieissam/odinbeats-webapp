@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { jamHeart, jamHeartF } from '@ng-icons/jam-icons';
 import { Song } from '../../interfaces/song';
@@ -24,7 +24,9 @@ import { RepeatMode } from '../../interfaces/types';
   styleUrl: './music-player.component.scss'
 })
 export class MusicPlayerComponent implements OnInit, OnChanges {
-  @Input('song') inputSong!: Song;
+  @ViewChild('playbackControl') playbackControlRef!: PlaybackControlComponent;
+
+  @Input('song') inputSong?: Song;
   @Output('like') likeChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   activeSong?: Song;
@@ -32,20 +34,22 @@ export class MusicPlayerComponent implements OnInit, OnChanges {
   constructor(private musicPlayerService: MusicPlayerService) { }
 
   ngOnInit(): void {
-    this.setSong();
+    this.setSong(this.inputSong);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['activeSong']) {
-      let song: Song = changes['activeSong'].currentValue;
+    if (changes['inputSong']) {
+      let song: Song = changes['inputSong'].currentValue;
       this.setSong(song);
     }
   }
 
-  setSong(song: Song = this.inputSong) {
-    this.activeSong = song;
-    if (this.activeSong) {
+  setSong(song?: Song) {
+    if (song) {
+      this.activeSong = song;
       this.musicPlayerService.setSongPath(this.activeSong.path);
+      this.playbackControlRef.isPlaying = false;
+      this.playbackControlRef.togglePlay();
     }
   }
 

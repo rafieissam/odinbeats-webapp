@@ -21,6 +21,7 @@
         </div>
         <div class="w-1/3">
             <app-playback-control
+                #playbackControl
                 [currentTime]="currentTime"
                 [songDuration]="activeSong?.duration || 0"
                 (play)="onPlay()"

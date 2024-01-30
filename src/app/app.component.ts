@@ -15,5 +15,4 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'odinbeats-fe';
 }

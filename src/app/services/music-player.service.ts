@@ -34,6 +34,7 @@ export class MusicPlayerService {
       this.setSongPath(path);
       return;
     }
+    this.audioPlayer.currentTime = 0;
     this.audioPlayer.src = path;
   }
 

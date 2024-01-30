@@ -5,6 +5,11 @@ import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { jamSearch, jamUserCircle } from '@ng-icons/jam-icons';
 import { MusicPlayerComponent } from '../../components/music-player/music-player.component';
 import { Song } from '../../interfaces/song';
+import { UserSongsApiService } from '../../services/user-songs-api.service';
+import { UserPlaylistsApiService } from '../../services/user-playlists-api.service';
+import { Playlist } from '../../interfaces/playlist';
+import { DurationToMinsPipe } from '../../pipes/duration-to-mins.pipe';
+import { DurationToStringPipe } from '../../duration-to-string.pipe';
 
 @Component({
   selector: 'app-home',
@@ -14,25 +19,44 @@ import { Song } from '../../interfaces/song';
     RouterModule,
     NgIconComponent,
     MusicPlayerComponent,
+    DurationToMinsPipe,
+    DurationToStringPipe,
   ],
-  providers: [provideIcons({ jamSearch, jamUserCircle })],
+  providers: [
+    provideIcons({ jamSearch, jamUserCircle }),
+    UserSongsApiService,
+    UserPlaylistsApiService,
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
   recents = ['1', '2', '3'];
+  activeSong?: Song;
+  likedSongs: Song[] = [];
+  myMostPlayedSongs: Song[] = [];
+  myPlaylists: Playlist[] = [];
 
-  song: Song = {
-    id: 'uuid',
-    name: 'Holier Than Thou',
-    image: 'https://img.wynk.in/unsafe/248x248/filters:no_upscale():strip_exif():format(webp)/http://s3-ap-south-1.amazonaws.com/wynk-music-cms/srch_universalmusic/music/update/1617900493/srch_universalmusic_00731451002229-GBF089190020.jpg',
-    duration: 227,
-    path: 'https://fine.sunproxy.net/file/d1JCdG80TGNMZThNdWJiTnBqdmRselhCUHp0aG1KemJMMmU4TEc1c2lPeVNUbzB5RzJ5d0lXVWJGa1QxVFd4SmVBaEM1THh2M3dUUTh1SlFPalNBZHFMdldIR3E1My9ZT2FENSt5T2pKMVE9/Metallica_-_Holier_Than_Thou_(ColdMP3.com).mp3',
-    format: 'mp3',
-    artist: 'Metallica',
-    album: 'Metallica',
-    genre: ['heavy metal', 'metal', 'rock'],
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  };
+  constructor(
+    private userSongs: UserSongsApiService,
+    private userPlaylists: UserPlaylistsApiService,
+  ) {
+    this.userSongs.getLikedSongs().subscribe(songs => {
+      this.likedSongs = songs;
+    });
+    this.userSongs.getMostPlayedSongs().subscribe(songs => {
+      this.myMostPlayedSongs = songs;
+    });
+    this.userPlaylists.getUserPlaylists().subscribe(playlists => {
+      this.myPlaylists = playlists;
+    });
+  }
+
+  playSong(song: Song) {
+    this.activeSong = song;
+  }
+
+  getPlaylistImage(playlist: Playlist) {
+    return playlist?.songs?.length ? playlist.songs[0].song.image : ''; 
+  }
 }

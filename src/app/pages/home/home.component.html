@@ -1,58 +1,84 @@
-<div class="h-screen">
-    <div class="py-8 px-10">
-        <div class="flex items-center justify-between text-slate-200">
-            <label class="relative block">
-                <span class="sr-only">Search</span>
-                <span class="absolute inset-y-0 left-0 flex items-center pl-4 z-10">
-                    <ng-icon name="jamSearch" />
-                </span>
-                <input class="bg-color-6 rounded-full py-2 px-4 pl-12 text-sm focus-within:outline-none border-2 border-transparent focus:border-[var(--color-7)] placeholder:text-slate-400 placeholder:text-sm ease-in-out transition-all" placeholder="Search for anything..." autocomplete="off" type="text" name="search"/>
-            </label>
-            <a class="bg-color-7 rounded-full py-2 pl-3 pr-4 text-sm transition flex items-center">
-                <ng-icon name="jamUserCircle" class="mr-2" />
-                User
-            </a>
-        </div>
-        <div class="mt-12">
-            <div class="flex items-center justify-between pr-2">
-                <div class="text-xl font-bold text-white tracking-wide">
-                    Recently Played
-                </div>
-                <a class="text-white underline" routerLink="/recents">See all</a>
+<div class="py-8 px-10 overflow-y-auto" style="max-height: calc(100vh - 7rem);">
+    <div class="flex items-center justify-between text-slate-200">
+        <label class="relative block">
+            <span class="sr-only">Search</span>
+            <span class="absolute inset-y-0 left-0 flex items-center pl-4 z-10">
+                <ng-icon name="jamSearch" />
+            </span>
+            <input class="bg-color-6 rounded-full py-2 px-4 pl-12 text-sm focus-within:outline-none border-2 border-transparent focus:border-[var(--color-7)] placeholder:text-slate-400 placeholder:text-sm ease-in-out transition-all" placeholder="Search for anything..." autocomplete="off" type="text" name="search"/>
+        </label>
+        <a class="bg-color-7 rounded-full py-2 pl-3 pr-4 text-sm transition flex items-center">
+            <ng-icon name="jamUserCircle" class="mr-2" />
+            User
+        </a>
+    </div>
+    <div class="mt-12">
+        <div class="flex items-center justify-between pr-2">
+            <div class="text-xl font-bold text-white tracking-wide">
+                Most Played
             </div>
-            <div class="mt-8">
-                <div class="flex space-x-4">
-                    @for (a of recents; track a.toString()) {
-                        <div>
-                            <div class="bg-no-repeat bg-center bg-cover w-48 h-48 rounded-md" style="background-image: url('https://img.wynk.in/unsafe/248x248/filters:no_upscale():strip_exif():format(webp)/http://s3-ap-south-1.amazonaws.com/wynk-music-cms/srch_universalmusic/music/update/1617900493/srch_universalmusic_00731451002229-GBF089190020.jpg');"></div>
-                            <div class="text-center mt-2">
-                                <div class="text-slate-200 text-sm font-bold">Title</div>
-                                <div class="text-slate-500 text-xs">Artist</div>
+            <a class="text-white underline" routerLink="/recents">See all</a>
+        </div>
+        <div class="mt-6">
+            <div class="flex space-x-4">
+                @for (song of myMostPlayedSongs; track song.id) {
+                    <div>
+                        <div class="cursor-pointer bg-no-repeat bg-center bg-cover w-36 h-36 bg-[var(--color-1)] rounded-md" [ngStyle]="{ backgroundImage: 'url(\'' + song.image + '\')' }"></div>
+                        <div class="text-center mt-2">
+                            <div class="text-slate-200 text-sm font-bold">{{ song.name }}</div>
+                            <div class="text-slate-500 text-xs">{{ song.artist }}</div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="mt-12 flex items-start space-x-8">
+            <div class="w-2/5">
+                <div class="flex items-center justify-between">
+                    <div class="text-xl font-bold text-white tracking-wide">
+                        Liked Songs
+                    </div>
+                    <a class="text-white underline" routerLink="/recents">See all</a>
+                </div>
+                <div class="mt-4">
+                    @for (song of (likedSongs | slice:0:3); track song.id) {
+                        <div class="flex items-center py-2 px-2 hover:bg-slate-700 transition ease-in-out cursor-pointer" (click)="playSong(song)">
+                            <div class="bg-no-repeat bg-center bg-cover w-10 h-10 bg-[var(--color-1)] rounded-md" [ngStyle]="{ backgroundImage: 'url(\'' + song.image + '\')' }"></div>
+                            <div class="ml-4">
+                                <div class="text-slate-200 text-xs">
+                                    {{ song.name }}
+                                </div>
+                                <div class="text-slate-400 text-[0.6rem]">
+                                    {{ song.artist }}
+                                </div>
                             </div>
                         </div>
                     }
                 </div>
             </div>
-            <div class="mt-12 flex items-start space-x-8">
-                <div class="w-2/5">
-                    <div class="flex items-center justify-between">
-                        <div class="text-xl font-bold text-white tracking-wide">
-                            Liked Songs
-                        </div>
-                        <a class="text-white underline" routerLink="/recents">See all</a>
+            <div class="w-3/5">
+                <div class="flex items-center justify-between">
+                    <div class="text-xl font-bold text-white tracking-wide">
+                        Playlists
                     </div>
+                    <a class="text-white underline" routerLink="/recents">See all</a>
                 </div>
-                <div class="w-3/5">
-                    <div class="flex items-center justify-between">
-                        <div class="text-xl font-bold text-white tracking-wide">
-                            Playlists
-                        </div>
-                        <a class="text-white underline" routerLink="/recents">See all</a>
+                <div class="mt-4">
+                    <div class="flex space-x-4">
+                        @for (playlist of myPlaylists; track playlist.id) {
+                            <div class="cursor-pointer">
+                                <div class="bg-no-repeat shadow-sm bg-center bg-cover w-48 h-48 bg-[var(--color-1)] rounded-md" [ngStyle]="{ backgroundImage: 'url(\'' + getPlaylistImage(playlist) + '\')' }"></div>
+                                <div class="mt-2">
+                                    <div class="text-slate-200 text-sm font-bold">{{ playlist.name }}</div>
+                                    <div class="text-slate-500 text-xs">{{ (playlist?.totalDuration || 0) | durationToString }}</div>
+                                </div>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <app-music-player class="absolute inset-x-0 bottom-0" [song]="song"></app-music-player>
 </div>
+
+<app-music-player class="fixed right-0 bottom-0 left-[18rem]" [song]="activeSong"></app-music-player>

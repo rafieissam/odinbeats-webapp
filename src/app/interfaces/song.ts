@@ -10,6 +10,7 @@ export interface Song {
   createdAt: Date;
   updatedAt: Date;
 
+  myPlays?: number;
   // plays: SongPlay[];
   // likes: LikedSong[];
   // playlists: PlaylistSong[];

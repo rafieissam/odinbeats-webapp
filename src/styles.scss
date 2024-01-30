@@ -10,6 +10,7 @@
 
 * {
     position: relative;
+    box-sizing: border-box;
     &:focus-visible {
         outline: 1px solid var(--color-7);
         outline-offset: 1px;

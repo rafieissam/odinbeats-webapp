@@ -44,8 +44,8 @@
         "updatedAt": "2024-01-30T08:55:43.980Z"
     },
     {
-        "id": "playlistID_1",
-        "name": "Playlist 1",
+        "id": "playlistID_2",
+        "name": "Playlist 2",
         "songs": [
             {
                 "song": {
@@ -137,7 +137,8 @@
                 },
                 "addedAt": "2024-01-30T08:55:43.980Z"
             },
-                {
+            {
+                "song": {
                     "id": "songID_5",
                     "name": "Fade To Black",
                     "image": "https://img.wynk.in/unsafe/248x248/filters:no_upscale():strip_exif():format(webp)/http://s3-ap-south-1.amazonaws.com/wynk-music-cms/srch_universalmusic/music/update/1617900493/srch_universalmusic_00731451002229-GBF089190020.jpg",
@@ -151,7 +152,9 @@
                     "likes": 20,
                     "createdAt": "2024-01-30T08:55:43.980Z",
                     "updatedAt": "2024-01-30T08:55:43.980Z"
-                }
+                },
+                "addedAt": "2024-01-30T08:55:43.980Z"
+            }
         ],
         "createdAt": "2024-01-30T08:55:43.980Z",
         "updatedAt": "2024-01-30T08:55:43.980Z"
