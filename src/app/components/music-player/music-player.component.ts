@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { jamHeart, jamHeartF } from '@ng-icons/jam-icons';
 import { Song } from '../../interfaces/song';
@@ -23,27 +23,30 @@ import { RepeatMode } from '../../interfaces/types';
   templateUrl: './music-player.component.html',
   styleUrl: './music-player.component.scss'
 })
-export class MusicPlayerComponent implements OnInit {
+export class MusicPlayerComponent implements OnInit, OnChanges {
+  @Input('song') inputSong!: Song;
+  @Output('like') likeChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+
   activeSong?: Song;
 
   constructor(private musicPlayerService: MusicPlayerService) { }
 
   ngOnInit(): void {
-    let song: Song = {
-      id: 'uuid',
-      name: 'Holier Than Thou',
-      image: 'https://img.wynk.in/unsafe/248x248/filters:no_upscale():strip_exif():format(webp)/http://s3-ap-south-1.amazonaws.com/wynk-music-cms/srch_universalmusic/music/update/1617900493/srch_universalmusic_00731451002229-GBF089190020.jpg',
-      duration: 227,
-      path: 'https://fine.sunproxy.net/file/d1JCdG80TGNMZThNdWJiTnBqdmRselhCUHp0aG1KemJMMmU4TEc1c2lPeVNUbzB5RzJ5d0lXVWJGa1QxVFd4SmVBaEM1THh2M3dUUTh1SlFPalNBZHFMdldIR3E1My9ZT2FENSt5T2pKMVE9/Metallica_-_Holier_Than_Thou_(ColdMP3.com).mp3',
-      format: 'mp3',
-      artist: 'Metallica',
-      album: 'Metallica',
-      genre: ['heavy metal', 'metal', 'rock'],
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    };
+    this.setSong();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['activeSong']) {
+      let song: Song = changes['activeSong'].currentValue;
+      this.setSong(song);
+    }
+  }
+
+  setSong(song: Song = this.inputSong) {
     this.activeSong = song;
-    this.musicPlayerService.setSongPath(song.path);
+    if (this.activeSong) {
+      this.musicPlayerService.setSongPath(this.activeSong.path);
+    }
   }
 
   // Volume Control
@@ -98,12 +101,16 @@ export class MusicPlayerComponent implements OnInit {
 
   // Like Actions
   like() {
-    if (this.activeSong?.hasOwnProperty('isLiked'))
+    if (this.activeSong?.hasOwnProperty('isLiked')) {
       this.activeSong.isLiked = true;
+      this.likeChange.emit(this.activeSong.isLiked);
+    }
   }
 
   unlike() {
-    if (this.activeSong?.hasOwnProperty('isLiked'))
+    if (this.activeSong?.hasOwnProperty('isLiked')) {
       this.activeSong.isLiked = false;
+      this.likeChange.emit(this.activeSong.isLiked);
+    }
   }
 }
