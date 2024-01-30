@@ -73,8 +73,14 @@ export class PlaybackControlComponent {
   onMouseUp() {
     if (this.isSeeking) {
       this.isSeeking = false;
+      this.pauseTrigger.emit();
       this.setSeek(this.tempSeek);
-      this.tempSeek = undefined;
+      if (this.isPlaying) {
+        this.playTrigger.emit();
+      }
+      setTimeout(() => {
+        this.tempSeek = undefined;
+      }, 1000);
     }
   }
 
@@ -83,7 +89,13 @@ export class PlaybackControlComponent {
     const rect = seekBar.getBoundingClientRect();
     const offsetX = event.clientX - rect.left;
     const percentage = (offsetX / rect.width) * 100;
-    this.tempSeek = Math.round(Math.max(0, Math.min(100, percentage)) * this.songDuration / 100);
+    this.tempSeek = Math.max(0, Math.min(Math.round(Math.max(0, Math.min(100, percentage)) * this.songDuration / 100), this.songDuration));
+  }
+
+  onSeekClick(event: MouseEvent) {
+    this.isSeeking = true;
+    this.updateSeek(event);
+    this.onMouseUp();
   }
 
   setSeek(time: number = 0) {
@@ -123,6 +135,11 @@ export class PlaybackControlComponent {
   }
 
   goNext() {
+    if (this.isRepeatingOne) {
+      this.isRepeatingOne = false;
+      this.isRepeating = true;
+      this.repeatChange.emit("all");
+    }
     this.nextTrigger.emit();
   }
 }

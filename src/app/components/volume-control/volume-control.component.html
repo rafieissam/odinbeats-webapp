@@ -1,6 +1,6 @@
 <div class="flex items-center">
     <ng-icon class="cursor-pointer mr-3" (click)="toggleMute()" [name]="isMuted ? 'jamVolumeMute' : volumePercentage == 0 ? 'jamVolume' : volumePercentage < 50 ? 'jamVolumeDown' : 'jamVolumeUp'"></ng-icon>
-    <div #volumeBar class="rounded-md w-28 h-1 bg-slate-600 select-none">
+    <div #volumeBar class="rounded-md w-28 h-1 bg-slate-600 select-none" (click)="onVolumeClick($event)">
         <div class="absolute rounded-md inset-y-0 left-0 bg-[var(--color-7)]" [ngStyle]="{ width: volumePercentage + '%' }"></div>
         <div class="absolute cursor-grab h-3 w-3 -mt-1.5 -ml-1.5 hover:h-4 hover:w-4 hover:-mt-2 hover:-ml-2 top-1/2 rounded-full bg-[var(--color-7)] shadow-lg border-2 border-[var(--color-1)]"
             [ngStyle]="{ left: volumePercentage + '%' }"

@@ -78,6 +78,10 @@ export class VolumeControlComponent {
     let newVolume = Math.max(0, Math.min(100, percentage));
     this.setVolume(newVolume);
   }
+  
+  onVolumeClick(event: MouseEvent) {
+    this.updateVolume(event);
+  }
 
   setVolume(volume: number) {
     this.volumeChange.emit(volume);
