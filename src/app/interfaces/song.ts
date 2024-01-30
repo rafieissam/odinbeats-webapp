@@ -3,10 +3,7 @@ export interface Song {
   name: string;
   duration: number;
   path: string;
-  format: string;
   artist: string;
-  album: string;
-  genre: string[];
   createdAt: Date;
   updatedAt: Date;
 

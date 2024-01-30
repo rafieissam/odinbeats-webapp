@@ -41,7 +41,7 @@
                     <a class="text-white underline" routerLink="/recents">See all</a>
                 </div>
                 <div class="mt-4">
-                    @for (song of (likedSongs | slice:0:3); track song.id) {
+                    @for (song of (likedSongs | slice:0:4); track song.id) {
                         <div class="flex items-center py-2 px-2 hover:bg-slate-700 transition ease-in-out cursor-pointer" (click)="playSong(song)">
                             <div class="bg-no-repeat bg-center bg-cover w-10 h-10 bg-[var(--color-1)] rounded-md" [ngStyle]="{ backgroundImage: 'url(\'' + song.image + '\')' }"></div>
                             <div class="ml-4">
@@ -65,7 +65,7 @@
                 </div>
                 <div class="mt-4">
                     <div class="flex space-x-4">
-                        @for (playlist of myPlaylists; track playlist.id) {
+                        @for (playlist of (myPlaylists | slice:0:3); track playlist.id) {
                             <div class="cursor-pointer">
                                 <div class="bg-no-repeat shadow-sm bg-center bg-cover w-48 h-48 bg-[var(--color-1)] rounded-md" [ngStyle]="{ backgroundImage: 'url(\'' + getPlaylistImage(playlist) + '\')' }"></div>
                                 <div class="mt-2">
