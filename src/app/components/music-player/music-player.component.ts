@@ -1,12 +1,14 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
-import { jamHeart, jamHeartF } from '@ng-icons/jam-icons';
+import { jamHeart, jamHeartF, jamUnorderedList } from '@ng-icons/jam-icons';
 import { Song } from '../../interfaces/song';
 import { CommonModule } from '@angular/common';
 import { MusicPlayerService } from '../../services/music-player.service';
 import { VolumeControlComponent } from '../volume-control/volume-control.component';
 import { PlaybackControlComponent } from '../playback-control/playback-control.component';
 import { RepeatMode } from '../../interfaces/types';
+import { Subscription } from 'rxjs';
+import { QueueService } from '../../services/queue.service';
 
 @Component({
   selector: 'app-music-player',
@@ -18,38 +20,49 @@ import { RepeatMode } from '../../interfaces/types';
     VolumeControlComponent,
   ],
   providers: [
-    provideIcons({ jamHeart, jamHeartF }),
+    provideIcons({ jamHeart, jamHeartF, jamUnorderedList }),
   ],
   templateUrl: './music-player.component.html',
   styleUrl: './music-player.component.scss'
 })
-export class MusicPlayerComponent implements OnInit, OnChanges {
+export class MusicPlayerComponent implements OnInit, OnDestroy {
   @ViewChild('playbackControl') playbackControlRef!: PlaybackControlComponent;
 
-  @Input('song') inputSong?: Song;
   @Output('like') likeChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   activeSong?: Song;
+  subjectSubscriber?: Subscription;
 
-  constructor(private musicPlayerService: MusicPlayerService) { }
+  constructor(
+    private musicPlayerService: MusicPlayerService,
+    private queueService: QueueService,
+  ) { }
 
   ngOnInit(): void {
-    this.setSong(this.inputSong);
+    this.subjectSubscriber = this.musicPlayerService.getActiveSong().subscribe(activeSong => {
+      if (!activeSong) return;
+      this.activeSong = activeSong;
+      setTimeout(() => {
+        this.playbackControlRef.isPlaying = true;
+        this.onPlay();
+      });
+    });
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['inputSong']) {
-      let song: Song = changes['inputSong'].currentValue;
-      this.setSong(song);
-    }
+  ngOnDestroy(): void {
+    this.subjectSubscriber?.unsubscribe();
   }
 
-  setSong(song?: Song) {
-    if (song) {
-      this.activeSong = song;
-      this.musicPlayerService.setSongPath(this.activeSong.path);
-      this.playbackControlRef.isPlaying = false;
-      this.playbackControlRef.togglePlay();
+  // Queue
+  get showingQueue() {
+    return this.queueService.showingQueue;
+  }
+
+  toggleQueue() {
+    if (this.queueService.showingQueue) {
+      this.queueService.hideQueue();
+    } else {
+      this.queueService.showQueue();
     }
   }
 
@@ -73,6 +86,10 @@ export class MusicPlayerComponent implements OnInit, OnChanges {
   // Playback Control
   get currentTime() {
     return this.musicPlayerService.currentTime;
+  }
+
+  get songDuration() {
+    return this.musicPlayerService.songDuration;
   }
 
   onPlay() {

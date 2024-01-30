@@ -1,11 +1,19 @@
 import { Injectable } from '@angular/core';
 import { RepeatMode } from '../interfaces/types';
+import { Song } from '../interfaces/song';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { QueueService } from './queue.service';
+import { Playlist } from '../interfaces/playlist';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MusicPlayerService {
   private audioPlayer?: HTMLAudioElement;
+  private activeSong?: Song;
+  private activeSongSubject: BehaviorSubject<Song | undefined> = new BehaviorSubject<Song | undefined>(this.activeSong);
+  private activeSongObservable: Observable<Song | undefined> = this.activeSongSubject.asObservable();
+  private queue: Song[] = [];
 
   currentTime: number = 0;
   volume: number = 50;
@@ -14,18 +22,61 @@ export class MusicPlayerService {
   repeatMode: RepeatMode = "off";
   isShuffling: boolean = false;
 
-  constructor() {
+  constructor(private queueService: QueueService) {
     this.initAudioPlayer();
+    this.monitorQueueChanges();
+  }
+
+  get hasSong() {
+    return this.activeSong ? true : false;
+  }
+
+  get songDuration() {
+    return this.audioPlayer ? Math.floor(this.audioPlayer.duration) : 0;
   }
 
   initAudioPlayer() {
     this.audioPlayer = new Audio();
-    this.audioPlayer.preload = "none";
+    this.audioPlayer.preload = "auto";
     this.audioPlayer.ontimeupdate = (ev) => {
       if (!this.audioPlayer) return;
-      this.currentTime = Math.round(this.audioPlayer.currentTime);
+      this.currentTime = Math.floor(this.audioPlayer.currentTime);
     };
+    this.audioPlayer.onended = this.next;
     this.volume = 100 * this.audioPlayer.volume;
+  }
+
+  monitorQueueChanges() {
+    this.queueService.getQueue().subscribe(queue => {
+      this.queue = queue;
+    });
+  }
+
+  startPlaylist(playlist: Playlist) {
+    if (!playlist.songs?.length) return;
+    let songs = playlist.songs.map(playlistSong => playlistSong.song);
+    this.queueService.setQueue(songs);
+    this.startSong(songs[0]);
+    if (this.isShuffling) {
+      this.queueService.shuffleQueue();
+    }
+  }
+
+  startStandaloneSong(song: Song) {;
+    this.activeSong = { ...song };
+    this.setSongPath(this.activeSong.path);
+    this.activeSongSubject.next(this.activeSong);
+    this.queueService.setQueue([this.activeSong]);
+  }
+
+  startSong(song: Song) {;
+    this.activeSong = { ...song };
+    this.setSongPath(this.activeSong.path);
+    this.activeSongSubject.next(this.activeSong);
+  }
+
+  getActiveSong(): Observable<Song | undefined> {
+    return this.activeSongObservable;
   }
 
   setSongPath(path: string) {
@@ -34,18 +85,9 @@ export class MusicPlayerService {
       this.setSongPath(path);
       return;
     }
+    this.currentTime = 0;
     this.audioPlayer.currentTime = 0;
     this.audioPlayer.src = path;
-  }
-
-  play() {
-    if (!this.audioPlayer || !this.audioPlayer.src) return;
-    this.audioPlayer.play();
-  }
-
-  pause() {
-    if (!this.audioPlayer || !this.audioPlayer.src) return;
-    this.audioPlayer.pause();
   }
 
   setVolume(volume: number) {
@@ -58,49 +100,87 @@ export class MusicPlayerService {
     this.isMuted = mute;
   }
 
-  seek(time: number) {
-    if (!this.audioPlayer) return;
-    this.audioPlayer.currentTime = time;
-  }
-
   setShuffle(state: boolean) {
     this.isShuffling = state;
+    if (this.isShuffling) {
+      this.queueService.shuffleQueue();
+    } else {
+      this.queueService.unshuffleQueue();
+    }
   }
 
   setRepeatMode(repeatMode: RepeatMode) {
     this.repeatMode = repeatMode;
-    let endFunc;
-    switch (this.repeatMode) {
-      case "all":
-        // To Update
-        endFunc = () => {};
-        break;
-      case "one":
-        endFunc = this.startOver;
-        break;
-      case "off":
-        endFunc = this.next;
-        break;
+    if (this.repeatMode != "off" && this.audioPlayer) {
+      if (this.currentTime >= Math.floor(this.audioPlayer.duration)) {
+        this.currentTime = 0;
+        setTimeout(() => {
+          this.next();
+        }, 1000);
+      }
     }
+  }
+
+  play() {
+    if (!this.audioPlayer || !this.audioPlayer.src) return;
+    this.audioPlayer.play();
+  }
+
+  pause() {
+    if (!this.audioPlayer || !this.audioPlayer.src) return;
+    this.audioPlayer.pause();
+  }
+
+  seek(time: number) {
     if (!this.audioPlayer) return;
-    this.audioPlayer.onended = endFunc;
+    this.audioPlayer.currentTime = time;
+    if (time >= Math.floor(this.audioPlayer.duration)) {
+      this.currentTime = 0;
+      setTimeout(() => {
+        this.next();
+      }, 1000);
+    }
   }
 
   next() {
-    // To Update
-  }
-
-  prev() {
-    if (this.audioPlayer && this.currentTime < this.audioPlayer?.duration) {
-      this.seek(0);
+    if (!this.queue?.length) return;
+    let song;
+    if (this.queueService.atEnd()) {
+      if (this.repeatMode == "all") {
+        song = this.queueService.getFirstSong();
+        this.queueService.goToFirst();
+      } else if (this.repeatMode == "off") {
+        this.pause();
+      }
     } else {
-      // To Update
+      song = this.queueService.getNextSong();
+      this.queueService.goToNext();
+    }
+    if (song) {
+      this.startSong(song);
     }
   }
 
-  startOver() {
-    this.seek(0);
-    this.play();
+  prev() {
+    if (this.audioPlayer && this.audioPlayer.currentTime > 3) {
+      this.seek(0);
+    } else if (this.queue.length) {
+      let song;
+      if (this.queueService.atStart()) {
+        if (this.repeatMode == "all") {
+          song = this.queueService.getLastSong();
+          this.queueService.goToLast();
+        } else if (this.repeatMode == "off") {
+          this.seek(0);
+        }
+      } else {
+        song = this.queueService.getPreviousSong();
+        this.queueService.goToPrevious();
+      }
+      if (song) {
+        this.startSong(song);
+      }
+    }
   }
 
 }

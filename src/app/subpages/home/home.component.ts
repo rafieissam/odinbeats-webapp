@@ -3,13 +3,13 @@ import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { jamSearch, jamUserCircle } from '@ng-icons/jam-icons';
-import { MusicPlayerComponent } from '../../components/music-player/music-player.component';
 import { Song } from '../../interfaces/song';
 import { UserSongsApiService } from '../../services/user-songs-api.service';
 import { UserPlaylistsApiService } from '../../services/user-playlists-api.service';
 import { Playlist } from '../../interfaces/playlist';
 import { DurationToMinsPipe } from '../../pipes/duration-to-mins.pipe';
 import { DurationToStringPipe } from '../../duration-to-string.pipe';
+import { MusicPlayerService } from '../../services/music-player.service';
 
 @Component({
   selector: 'app-home',
@@ -18,26 +18,23 @@ import { DurationToStringPipe } from '../../duration-to-string.pipe';
     CommonModule,
     RouterModule,
     NgIconComponent,
-    MusicPlayerComponent,
     DurationToMinsPipe,
     DurationToStringPipe,
   ],
   providers: [
     provideIcons({ jamSearch, jamUserCircle }),
-    UserSongsApiService,
-    UserPlaylistsApiService,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
   recents = ['1', '2', '3'];
-  activeSong?: Song;
   likedSongs: Song[] = [];
   myMostPlayedSongs: Song[] = [];
   myPlaylists: Playlist[] = [];
 
   constructor(
+    private musicPlayerService: MusicPlayerService,
     private userSongs: UserSongsApiService,
     private userPlaylists: UserPlaylistsApiService,
   ) {
@@ -53,7 +50,11 @@ export class HomeComponent {
   }
 
   playSong(song: Song) {
-    this.activeSong = song;
+    this.musicPlayerService.startStandaloneSong(song);
+  }
+
+  playPlaylist(playlist: Playlist) {
+    this.musicPlayerService.startPlaylist(playlist);
   }
 
   getPlaylistImage(playlist: Playlist) {
