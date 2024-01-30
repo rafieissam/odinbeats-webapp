@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
-import { jamHome, jamHeart, jamVolumeUpCircle, jamDisc, jamPlusRectangle } from '@ng-icons/jam-icons';
+import { jamHome, jamHeart, jamBook, jamDisc, jamPlusRectangle } from '@ng-icons/jam-icons';
 import { LogoComponent } from '../logo/logo.component';
 import { PlaylistService } from '../../services/playlist.service';
 import { Playlist } from '../../interfaces/playlist';
@@ -16,7 +16,7 @@ import { Playlist } from '../../interfaces/playlist';
     NgIconComponent,
     LogoComponent,
   ],
-  providers: [provideIcons({ jamHome, jamHeart, jamVolumeUpCircle, jamDisc, jamPlusRectangle })],
+  providers: [provideIcons({ jamHome, jamHeart, jamBook, jamDisc, jamPlusRectangle })],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'
 })
@@ -24,7 +24,7 @@ export class SidebarComponent implements OnInit {
   routes = [
     { title: 'Home', route: '', icon: 'jamHome' },
     { title: 'Liked Songs', route: 'likes', icon: 'jamHeart' },
-    { title: 'Recently Played', route: 'recents', icon: 'jamVolumeUpCircle' },
+    { title: 'Library', route: 'library', icon: 'jamBook' },
   ];
 
   playlists: Playlist[] = [];
