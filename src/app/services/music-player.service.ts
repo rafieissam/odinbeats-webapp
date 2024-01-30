@@ -4,11 +4,14 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class MusicPlayerService {
-
   private audioPlayer?: HTMLAudioElement;
 
-  playthrough: number = 0;
-  volumePercentage: number = 20;
+  currentTime: number = 0;
+  volume: number = 50;
+  isMuted: boolean = false;
+
+  repeatMode: "all" | "one" | "off" = "off";
+  isShuffling: boolean = false;
 
   constructor() {
     this.initAudioPlayer();
@@ -19,21 +22,9 @@ export class MusicPlayerService {
     this.audioPlayer.preload = "none";
     this.audioPlayer.ontimeupdate = (ev) => {
       if (!this.audioPlayer) return;
-      this.playthrough = Math.round(this.audioPlayer.currentTime);
+      this.currentTime = Math.round(this.audioPlayer.currentTime);
     };
-    this.volumePercentage = 100 * this.audioPlayer.volume;
-  }
-
-  startOver() {
-    this.seek(0);
-    this.play();
-  }
-  
-  setRepeatOnce() {
-    if (!this.audioPlayer) return;
-    this.audioPlayer.onended = () => {
-      this.startOver();
-    };
+    this.volume = 100 * this.audioPlayer.volume;
   }
 
   setSongPath(path: string) {
@@ -55,15 +46,59 @@ export class MusicPlayerService {
     this.audioPlayer.pause();
   }
 
-  setVolume(volumePercentage: number) {
+  setVolume(volume: number) {
     if (!this.audioPlayer) return;
-    this.volumePercentage = Math.max(0, Math.min(100, volumePercentage));
-    this.audioPlayer.volume = volumePercentage / 100;
+    this.volume = Math.max(0, Math.min(100, volume));
+    this.audioPlayer.volume = this.volume / 100;
+  }
+
+  setMute(mute: boolean) {
+    this.isMuted = mute;
   }
 
   seek(time: number) {
     if (!this.audioPlayer) return;
     this.audioPlayer.currentTime = time;
+  }
+
+  setShuffle(state: boolean) {
+    this.isShuffling = state;
+  }
+
+  setRepeatMode(repeatMode: typeof this.repeatMode) {
+    this.repeatMode = repeatMode;
+    let endFunc;
+    switch (this.repeatMode) {
+      case "all":
+        // To Update
+        endFunc = () => {};
+        break;
+      case "one":
+        endFunc = this.startOver;
+        break;
+      case "off":
+        endFunc = this.next;
+        break;
+    }
+    if (!this.audioPlayer) return;
+    this.audioPlayer.onended = endFunc;
+  }
+
+  next() {
+    // To Update
+  }
+
+  prev() {
+    if (this.audioPlayer && this.currentTime < this.audioPlayer?.duration) {
+      this.seek(0);
+    } else {
+      // To Update
+    }
+  }
+
+  startOver() {
+    this.seek(0);
+    this.play();
   }
 
 }
