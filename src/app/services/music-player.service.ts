@@ -15,6 +15,9 @@ export class MusicPlayerService {
   private activeSongObservable: Observable<Song | undefined> = this.activeSongSubject.asObservable();
   private queue: Song[] = [];
 
+  activePlaylistId?: string;
+  activeSongId?: string;
+
   currentTime: number = 0;
   volume: number = 50;
   isMuted: boolean = false;
@@ -52,25 +55,28 @@ export class MusicPlayerService {
     });
   }
 
-  startPlaylist(playlist: Playlist) {
+  startPlaylist(playlist: Playlist, index: number = 0) {
     if (!playlist.songs?.length) return;
     let songs = playlist.songs.map(playlistSong => playlistSong.song);
+    this.activePlaylistId = playlist.id;
     this.queueService.setQueue(songs);
-    this.startSong(songs[0]);
+    this.startSong(songs[index]);
+    this.queueService.goToIndex(index);
     if (this.isShuffling) {
       this.queueService.shuffleQueue();
     }
   }
 
-  startStandaloneSong(song: Song) {;
-    this.activeSong = { ...song };
-    this.setSongPath(this.activeSong.path);
-    this.activeSongSubject.next(this.activeSong);
-    this.queueService.setQueue([this.activeSong]);
+  startStandaloneSong(song: Song) {
+    this.startSong(song);
+    if (this.activeSong) {
+      this.queueService.setQueue([this.activeSong]);
+    }
   }
 
   startSong(song: Song) {;
     this.activeSong = { ...song };
+    this.activeSongId = song.id;
     this.setSongPath(this.activeSong.path);
     this.activeSongSubject.next(this.activeSong);
   }

@@ -15,21 +15,37 @@ export class UserPlaylistsApiService {
 
   constructor() { }
 
-  getUserPlaylist(playlistId: string) {}
+  getUserPlaylist(playlistId: string): Observable<Playlist> {
+    return new Observable(subscriber => {
+      this.getUserPlaylists().subscribe(playlists => {
+        let playlist = playlists.filter(p => p.id == playlistId)[0];
+        subscriber.next(playlist);
+        subscriber.complete();
+      });
+    });
+  }
+
   getUserPlaylists(): Observable<Playlist[]> {
     return new Observable(subscriber => {
       let playlists = DUMMY_PLAYLISTS as Playlist[];
       playlists = playlists.map(p => {
         p.totalDuration = 0;
+        let image;
         if (p.songs) {
           for (let playlistSong of p.songs) {
             p.totalDuration += playlistSong.song.duration;
+            if (!image && playlistSong.song.image) {
+              image = playlistSong.song.image;
+            }
           }
         }
+        p.image = image;
         return p;
-      })
-      subscriber.next(playlists);
-      subscriber.complete();
+      });
+      setTimeout(() => {
+        subscriber.next(playlists);
+        subscriber.complete();
+      }, 1000);
     });
   }
   

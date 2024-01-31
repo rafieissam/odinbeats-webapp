@@ -16,8 +16,10 @@ export class UserSongsApiService {
   getLikedSongs(): Observable<Song[]> {
     return new Observable(subscriber => {
       let songs = DUMMY_SONGS;
-      subscriber.next(songs);
-      subscriber.complete();
+      setTimeout(() => {
+        subscriber.next(songs);
+        subscriber.complete();
+      }, 1000);
     });
   }
 
@@ -25,8 +27,10 @@ export class UserSongsApiService {
     return new Observable(subscriber => {
       let songs = DUMMY_SONGS as Song[];
       songs = songs.sort((a, b) => a.myPlays as number - (b.myPlays as number) > 0 ? 1 : -1);
-      subscriber.next(songs);
-      subscriber.complete();
+      setTimeout(() => {
+        subscriber.next(songs);
+        subscriber.complete();
+      }, 1000);
     });
   }
   

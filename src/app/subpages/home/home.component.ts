@@ -56,8 +56,4 @@ export class HomeComponent {
   playPlaylist(playlist: Playlist) {
     this.musicPlayerService.startPlaylist(playlist);
   }
-
-  getPlaylistImage(playlist: Playlist) {
-    return playlist?.songs?.length ? playlist.songs[0].song.image : ''; 
-  }
 }
