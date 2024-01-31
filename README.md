@@ -7,9 +7,10 @@
 - Playlist Page - done
 - Liked Songs Page - done
 
-- Update Temp Data to match API responses more accurately
+- Sync up home page - done
 - Sync up sidebar
-- Sync up home page
+- Update Temp Data to match API responses more accurately
+- fill @emptys
 
 - Library: create new playlist and navigate to it
 - Search songs

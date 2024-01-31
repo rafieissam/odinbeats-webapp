@@ -10,6 +10,7 @@ import { Playlist } from '../../interfaces/playlist';
 import { DurationToMinsPipe } from '../../pipes/duration-to-mins.pipe';
 import { DurationToStringPipe } from '../../duration-to-string.pipe';
 import { MusicPlayerService } from '../../services/music-player.service';
+import { LoaderComponent } from '../../components/loader/loader.component';
 
 @Component({
   selector: 'app-home',
@@ -18,6 +19,7 @@ import { MusicPlayerService } from '../../services/music-player.service';
     CommonModule,
     RouterModule,
     NgIconComponent,
+    LoaderComponent,
     DurationToMinsPipe,
     DurationToStringPipe,
   ],
@@ -28,24 +30,33 @@ import { MusicPlayerService } from '../../services/music-player.service';
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
-  recents = ['1', '2', '3'];
-  likedSongs: Song[] = [];
   myMostPlayedSongs: Song[] = [];
+  likedSongs: Song[] = [];
   myPlaylists: Playlist[] = [];
+
+  mostPlayedLoading: boolean = false;
+  likesLoading: boolean = false;
+  playlistsLoading: boolean = false;
 
   constructor(
     private musicPlayerService: MusicPlayerService,
     private userSongs: UserSongsApiService,
     private userPlaylists: UserPlaylistsApiService,
   ) {
-    this.userSongs.getLikedSongs().subscribe(songs => {
-      this.likedSongs = songs;
-    });
+    this.mostPlayedLoading = true;
     this.userSongs.getMostPlayedSongs().subscribe(songs => {
       this.myMostPlayedSongs = songs;
+      this.mostPlayedLoading = false;
     });
+    this.likesLoading = true;
+    this.userSongs.getLikedSongs().subscribe(songs => {
+      this.likedSongs = songs;
+      this.likesLoading = false;
+    });
+    this.playlistsLoading = true;
     this.userPlaylists.getUserPlaylists().subscribe(playlists => {
       this.myPlaylists = playlists;
+      this.playlistsLoading = false;
     });
   }
 
