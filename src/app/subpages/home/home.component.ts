@@ -11,6 +11,7 @@ import { DurationToMinsPipe } from '../../pipes/duration-to-mins.pipe';
 import { DurationToStringPipe } from '../../duration-to-string.pipe';
 import { MusicPlayerService } from '../../services/music-player.service';
 import { LoaderComponent } from '../../components/loader/loader.component';
+import { SongsApiService } from '../../services/songs-api.service';
 
 @Component({
   selector: 'app-home',
@@ -40,21 +41,22 @@ export class HomeComponent {
 
   constructor(
     private musicPlayerService: MusicPlayerService,
-    private userSongs: UserSongsApiService,
-    private userPlaylists: UserPlaylistsApiService,
+    private songService: SongsApiService,
+    private userSongService: UserSongsApiService,
+    private userPlaylistService: UserPlaylistsApiService,
   ) {
     this.mostPlayedLoading = true;
-    this.userSongs.getMostPlayedSongs().subscribe(songs => {
+    this.songService.getMostPlayedSongs().subscribe(songs => {
       this.myMostPlayedSongs = songs;
       this.mostPlayedLoading = false;
     });
     this.likesLoading = true;
-    this.userSongs.getLikedSongs().subscribe(songs => {
+    this.userSongService.getLikedSongs().subscribe(songs => {
       this.likedSongs = songs;
       this.likesLoading = false;
     });
     this.playlistsLoading = true;
-    this.userPlaylists.getUserPlaylists().subscribe(playlists => {
+    this.userPlaylistService.getUserPlaylists().subscribe(playlists => {
       this.myPlaylists = playlists;
       this.playlistsLoading = false;
     });

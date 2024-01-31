@@ -12,6 +12,8 @@
 - Update Temp Data to match API responses more accurately
 - fill @emptys
 
+- add caching in api services
+
 - Library: create new playlist and navigate to it
 - Search songs
 - Add songs to playlist

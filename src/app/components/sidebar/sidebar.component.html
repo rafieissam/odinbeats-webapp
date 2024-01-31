@@ -1,12 +1,14 @@
 <div class="h-full py-6 bg-color-5">
     <div class="px-6">
-        <app-logo></app-logo>
+        <a class="cursor-pointer" routerLink="/">
+            <app-logo></app-logo>
+        </a>
     </div>
     <div class="mt-16 px-6">
         @for (r of routes; track r.route) {
             <a class="flex items-center py-1 my-1 text-gray-300 hover:text-gray-100 text-sm cursor-pointer tracking-wide transition"
                 [routerLink]="r.route"
-                routerLinkActive="font-bold text-white"
+                routerLinkActive="font-bold"
                 [routerLinkActiveOptions]="{ exact: true }">
                 <ng-icon class="mr-3" [name]="r.icon" color="var(--color-7)"></ng-icon>
                 {{ r.title }}
@@ -16,20 +18,24 @@
     <div class="mt-16 px-6">
         <div class="flex items-center">
             <div class="text-xs text-gray-300 tracking-wider">Playlists</div>
-            <ng-icon class="ml-2 cursor-pointer" name="jamPlusRectangle" color="var(--color-7)"></ng-icon>
+            <ng-icon (click)="createPlaylist()" class="ml-2 cursor-pointer" name="jamPlusRectangle" color="var(--color-7)"></ng-icon>
         </div>
         <div class="mt-3">
-            @for (playlist of playlists; track playlist.id) {
+            @for (playlist of (playlists | slice:0:7); track playlist.id) {
                 <a class="flex items-center my-1 py-1 text-xs text-gray-300 hover:text-gray-100 cursor-pointer transition"
-                    [routerLink]="'playlists/' + playlist.id"
-                    routerLinkActive="font-bold text-white">
+                    [routerLink]="'library/' + playlist.id"
+                    routerLinkActive="font-bold">
                     <ng-icon class="mr-2" name="jamDisc" color="var(--color-2)"></ng-icon>
                     {{ playlist.name }}
                 </a>
-            }
-            @empty {
+            } @empty {
                 <a class="flex items-center my-2 text-xs text-gray-200 italic">
                     You don't have any playlists yet!
+                </a>
+            }
+            @if (playlists.length > 7) {
+                <a class="pl-7 text-[0.7rem] flex items-center my-2 text-gray-200 hover:text-[var(--color-7)] italic transition ease-in" routerLink="library">
+                    View all...
                 </a>
             }
         </div>

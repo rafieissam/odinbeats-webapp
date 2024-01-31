@@ -49,7 +49,9 @@ export class UserPlaylistsApiService {
     });
   }
   
-  createUserPlaylist(playlistDto: PlaylistDto) {}
+  createUserPlaylist() {
+    console.log("Create Playlist and Reroute");
+  }
   updateUserPlaylist(playlistId: string, playlistDto: PlaylistDto) {}
   deleteUserPlaylist(playlistId: string) {}
 

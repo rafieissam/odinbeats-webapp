@@ -46,4 +46,7 @@ export class LibraryComponent implements OnInit {
     });
   }
 
+  createPlaylist() {
+    this.playlistService.createUserPlaylist();
+  }
 }
