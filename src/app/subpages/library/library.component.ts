@@ -7,6 +7,7 @@ import { RouterLink } from '@angular/router';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { jamPlusRectangle } from '@ng-icons/jam-icons';
 import { LoaderComponent } from '../../components/loader/loader.component';
+import { MusicPlayerService } from '../../services/music-player.service';
 
 @Component({
   selector: 'app-library',
@@ -30,7 +31,12 @@ export class LibraryComponent implements OnInit {
 
   constructor(
     private playlistService: UserPlaylistsApiService,
+    private musicPlayerService: MusicPlayerService,
   ) { }
+
+  get activePlaylistId() {
+    return this.musicPlayerService.activePlaylistId || -1;
+  }
 
   ngOnInit(): void {
     this.isLoading = true;
