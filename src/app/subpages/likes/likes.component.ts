@@ -29,7 +29,7 @@ import { PlaylistSong } from '../../interfaces/playlist-song';
 })
 export class LikesComponent implements OnInit {
   isLoading: boolean = false;
-  fakePlaylist!: Playlist;
+  fakePlaylist?: Playlist;
   listOfArtists: string = '';
   songs: Song[] = [];
 
@@ -39,7 +39,7 @@ export class LikesComponent implements OnInit {
   ) { }
 
   get activeSongIndex() {
-    if (this.musicPlayerService.activePlaylistId == this.fakePlaylist.id) {
+    if (this.fakePlaylist && this.musicPlayerService.activePlaylistId == this.fakePlaylist.id) {
       let index = -1;
       for (let i = 0; i < this.songs.length; i++) {
         if (this.songs[i].id == this.musicPlayerService.activeSongId) {
@@ -97,6 +97,7 @@ export class LikesComponent implements OnInit {
   }
 
   startAtSong(index: number) {
+    if (!this.fakePlaylist) return;
     this.musicPlayerService.startPlaylist(this.fakePlaylist, index);
   }
 }

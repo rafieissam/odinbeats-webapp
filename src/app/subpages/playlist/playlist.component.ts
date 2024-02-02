@@ -30,7 +30,7 @@ import { MusicPlayerService } from '../../services/music-player.service';
 export class PlaylistComponent implements OnInit {
   isLoading: boolean = false;
   playlistId!: string;
-  playlist!: Playlist;
+  playlist?: Playlist;
   listOfArtists: string = '';
   songs: Song[] = [];
 
@@ -41,7 +41,7 @@ export class PlaylistComponent implements OnInit {
   ) { }
 
   get activeSongIndex() {
-    if (this.musicPlayerService.activePlaylistId == this.playlist.id) {
+    if (this.playlist && this.musicPlayerService.activePlaylistId == this.playlist.id) {
       let index = -1;
       for (let i = 0; i < this.songs.length; i++) {
         if (this.songs[i].id == this.musicPlayerService.activeSongId) {
@@ -75,7 +75,7 @@ export class PlaylistComponent implements OnInit {
   }
 
   mapSongs() {
-    if (!this.playlist.songs) {
+    if (!this.playlist || !this.playlist.songs) {
       this.songs = [];
       return;
     }
@@ -102,6 +102,7 @@ export class PlaylistComponent implements OnInit {
   }
 
   startAtSong(index: number) {
+    if (!this.playlist) return;
     this.musicPlayerService.startPlaylist(this.playlist, index);
   }
 }
