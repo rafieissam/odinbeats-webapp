@@ -3,7 +3,7 @@ import { Playlist } from '../../interfaces/playlist';
 import { CommonModule } from '@angular/common';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { LoaderComponent } from '../../components/loader/loader.component';
-import { DurationToStringPipe } from '../../duration-to-string.pipe';
+import { DurationToStringPipe } from '../../pipes/duration-to-string.pipe';
 import { DurationToMinsPipe } from '../../pipes/duration-to-mins.pipe';
 import { jamPlay, jamMusic, jamClock, jamMic } from '@ng-icons/jam-icons';
 import { Song } from '../../interfaces/song';

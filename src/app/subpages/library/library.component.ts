@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserPlaylistsApiService } from '../../services/user-playlists-api.service';
 import { Playlist } from '../../interfaces/playlist';
-import { DurationToStringPipe } from '../../duration-to-string.pipe';
+import { DurationToStringPipe } from '../../pipes/duration-to-string.pipe';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';

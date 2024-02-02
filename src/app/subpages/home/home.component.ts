@@ -8,7 +8,7 @@ import { UserSongsApiService } from '../../services/user-songs-api.service';
 import { UserPlaylistsApiService } from '../../services/user-playlists-api.service';
 import { Playlist } from '../../interfaces/playlist';
 import { DurationToMinsPipe } from '../../pipes/duration-to-mins.pipe';
-import { DurationToStringPipe } from '../../duration-to-string.pipe';
+import { DurationToStringPipe } from '../../pipes/duration-to-string.pipe';
 import { MusicPlayerService } from '../../services/music-player.service';
 import { LoaderComponent } from '../../components/loader/loader.component';
 import { SongsApiService } from '../../services/songs-api.service';
