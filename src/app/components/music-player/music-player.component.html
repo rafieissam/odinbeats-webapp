@@ -35,7 +35,13 @@
         </div>
         <div class="w-1/3 flex justify-end items-center">
             <ng-icon class="mr-3 cursor-pointer" (click)="toggleQueue()" name="jamUnorderedList" size="1.75rem" [color]="showingQueue ? 'var(--color-7)' : 'var(--color-3)'"></ng-icon>
-            <app-volume-control [volume]="volume" (volume)="onChangeVolume($event)" [mute]="isMuted" (mute)="onChangeMute($event)"></app-volume-control>
+            <app-volume-control
+                #volumeControl
+                [volume]="volume"
+                (volume)="onChangeVolume($event)"
+                [mute]="isMuted"
+                (mute)="onChangeMute($event)"
+            ></app-volume-control>
         </div>
     </div>
 </div>

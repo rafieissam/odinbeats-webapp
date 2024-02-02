@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { jamHeart, jamHeartF, jamUnorderedList } from '@ng-icons/jam-icons';
 import { Song } from '../../interfaces/song';
@@ -27,6 +27,7 @@ import { QueueService } from '../../services/queue.service';
 })
 export class MusicPlayerComponent implements OnInit, OnDestroy {
   @ViewChild('playbackControl') playbackControlRef!: PlaybackControlComponent;
+  @ViewChild('volumeControl') volumeControlRef!: VolumeControlComponent;
 
   @Output('like') likeChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -51,6 +52,52 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subjectSubscriber?.unsubscribe();
+  }
+
+  // Document Pause/Play Listener
+  @HostListener('document:keydown', ['$event'])
+  handleKeydown(event: KeyboardEvent): void {
+    event.preventDefault();
+    if (document.activeElement === document.body) {
+      if (event.altKey) {
+        switch (event.key) {
+          case 'ArrowUp':
+            this.musicPlayerService.setVolume(this.volume + 10);
+            break;
+          case 'ArrowDown':
+            this.musicPlayerService.setVolume(this.volume - 10);
+            break;
+          case 'ArrowRight':
+            this.playbackControlRef.goNext();
+            break;
+          case 'ArrowLeft':
+            this.playbackControlRef.goPrevious();
+            break;
+          case 's':
+            this.playbackControlRef.toggleShuffle();
+            break;
+          case 'r':
+            this.playbackControlRef.toggleRepeat();
+            break;
+          case 'm':
+            this.volumeControlRef.toggleMute();
+            break;
+        }
+      } else if (event.shiftKey) {
+        switch (event.key) {
+          case 'ArrowRight':
+            this.onSeek(this.currentTime + 5);
+            break;
+          case 'ArrowLeft':
+            this.onSeek(this.currentTime - 5);
+            break;
+        }
+      } {
+        if (event.key === ' ') {
+          this.playbackControlRef.togglePlay();
+        }
+      }
+    }
   }
 
   // Queue
