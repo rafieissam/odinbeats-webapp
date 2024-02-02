@@ -7,10 +7,11 @@
     <div class="mt-16 px-6">
         @for (r of routes; track r.route) {
             <a class="flex items-center py-1 my-1 text-gray-300 hover:text-gray-100 text-sm cursor-pointer tracking-wide transition"
+                #rla="routerLinkActive"
                 [routerLink]="r.route"
                 routerLinkActive="font-bold"
                 [routerLinkActiveOptions]="{ exact: true }">
-                <ng-icon class="mr-3" [name]="r.icon" color="var(--color-7)"></ng-icon>
+                <ng-icon class="mr-3" [name]="rla.isActive ? r.activeIcon : r.icon" color="var(--color-7)"></ng-icon>
                 {{ r.title }}
             </a>
         }

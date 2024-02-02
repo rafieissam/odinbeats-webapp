@@ -15,6 +15,7 @@
 Home:
     - fill @emptys
     - create components
+    - add shortcuts modal (ctrl + /)
 Playlist:
 - create new playlist and navigate to it
 Songs:
