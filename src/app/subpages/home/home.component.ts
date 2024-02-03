@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { jamSearch, jamUserCircle } from '@ng-icons/jam-icons';
 import { Song } from '../../interfaces/song';
@@ -13,6 +13,7 @@ import { User } from '../../interfaces/user';
 import { UserPillComponent } from '../../components/user-pill/user-pill.component';
 import { PlaylistApiService } from '../../services/playlist-api.service';
 import { SongApiService } from '../../services/song-api.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
@@ -25,6 +26,7 @@ import { SongApiService } from '../../services/song-api.service';
     DurationToMinsPipe,
     DurationToStringPipe,
     UserPillComponent,
+    FormsModule,
   ],
   providers: [
     provideIcons({ jamSearch, jamUserCircle }),
@@ -43,7 +45,10 @@ export class HomeComponent {
 
   user?: User;
 
+  searchText: string = '';
+
   constructor(
+    private router: Router,
     private musicPlayerService: MusicPlayerService,
     private songService: SongApiService,
     private playlistService: PlaylistApiService,
@@ -71,5 +76,9 @@ export class HomeComponent {
 
   playPlaylist(playlist: Playlist) {
     this.musicPlayerService.startPlaylist(playlist);
+  }
+
+  onSearch() {
+    this.router.navigate(['/search'], { queryParams: { text: this.searchText }});
   }
 }
