@@ -1,35 +1,32 @@
 # Odinbeats Frontend
 
-## ToDo
+## Remaining ToDo
 
-- Music Player Queue - done
-- Library Page - done
-- Playlist Page - done
-- Liked Songs Page - done
-- Sync up home page - done
-- Sync up sidebar - done
+Service:
+    - Connect services to real backend
+    - add caching in api services
 
-- Update Temp Data to match API responses more accurately
-- add caching in api services
+Platform:
+    - add shortcuts modal (?) - done
 
 Home:
     - fill @emptys
-    - create components
-    - add shortcuts modal (ctrl + /)
+    - create components (most_played/trending, liked_songs, playlists)
+
 Playlist:
-- create new playlist and navigate to it
+    - create new playlist and navigate to it
+    - rename playlist
+    - delete playlist
+
 Songs:
-- Search
-- Add to playlist
-- Like/Unlike songs
+    - Search
+    - Add to playlist
+    - Like/Unlike songs
 
-- Mobile Design
+Settings:
+    - Edit user
+    - Profile Page
 
-Auth:
-- Guards - done
-- AuthService - done
-- HTTP Auth Interceptor - done
+Mobile Design
 
-User:
-- UserService
-- Profile Page
+Unit Tests

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, HostListener, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, EventEmitter, HostListener, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { jamHeart, jamHeartF, jamUnorderedList } from '@ng-icons/jam-icons';
 import { Song } from '../../interfaces/song';
@@ -9,6 +9,7 @@ import { PlaybackControlComponent } from '../playback-control/playback-control.c
 import { RepeatMode } from '../../interfaces/types';
 import { Subscription } from 'rxjs';
 import { QueueService } from '../../services/queue.service';
+import { ShortcutModalComponent } from '../shortcut-modal/shortcut-modal.component';
 
 @Component({
   selector: 'app-music-player',
@@ -18,6 +19,7 @@ import { QueueService } from '../../services/queue.service';
     NgIconComponent,
     PlaybackControlComponent,
     VolumeControlComponent,
+    ShortcutModalComponent,
   ],
   providers: [
     provideIcons({ jamHeart, jamHeartF, jamUnorderedList }),
@@ -33,6 +35,7 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
 
   activeSong?: Song;
   subjectSubscriber?: Subscription;
+  showingShortcutsModal: boolean = false;
 
   constructor(
     private musicPlayerService: MusicPlayerService,
@@ -57,8 +60,8 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
   // Document Pause/Play Listener
   @HostListener('document:keydown', ['$event'])
   handleKeydown(event: KeyboardEvent): void {
-    event.preventDefault();
     if (document.activeElement === document.body) {
+      let didNothing = false;
       if (event.altKey) {
         switch (event.key) {
           case 'ArrowUp':
@@ -82,6 +85,8 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
           case 'm':
             this.volumeControlRef.toggleMute();
             break;
+          default:
+            didNothing = true;
         }
       } else if (event.shiftKey) {
         switch (event.key) {
@@ -91,13 +96,32 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
           case 'ArrowLeft':
             this.onSeek(this.currentTime - 5);
             break;
+          case '?':
+            this.toggleShortcutsModal();
+            break;
+          default:
+            didNothing = true;
         }
-      } {
-        if (event.key === ' ') {
-          this.playbackControlRef.togglePlay();
+      } else if (event.ctrlKey) {
+        // No shortcuts
+        didNothing = true;
+      } else {
+        switch (event.key) {
+          case ' ':
+            this.playbackControlRef.togglePlay();
+            break;
+          default:
+            didNothing = true;
         }
       }
+      if (!didNothing) {
+        event.preventDefault();
+      }
     }
+  }
+
+  toggleShortcutsModal() {
+    this.showingShortcutsModal = !this.showingShortcutsModal;
   }
 
   // Queue

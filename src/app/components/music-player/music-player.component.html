@@ -45,3 +45,7 @@
         </div>
     </div>
 </div>
+
+@if (showingShortcutsModal) {
+    <app-shortcut-modal (close)="toggleShortcutsModal()"></app-shortcut-modal>
+}
