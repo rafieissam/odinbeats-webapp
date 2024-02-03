@@ -5,7 +5,7 @@ import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { jamHome, jamHomeF, jamHeart, jamHeartF, jamBook, jamBookF, jamDisc, jamPlusRectangle } from '@ng-icons/jam-icons';
 import { LogoComponent } from '../logo/logo.component';
 import { Playlist } from '../../interfaces/playlist';
-import { UserPlaylistsApiService } from '../../services/user-playlists-api.service';
+import { PlaylistApiService } from '../../services/playlist-api.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -30,7 +30,7 @@ export class SidebarComponent implements OnInit {
   playlists: Playlist[] = [];
 
   constructor(
-    private playlistService: UserPlaylistsApiService,
+    private playlistService: PlaylistApiService,
   ) {}
 
   ngOnInit(): void {

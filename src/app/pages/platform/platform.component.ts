@@ -5,9 +5,9 @@ import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 import { MusicPlayerComponent } from '../../components/music-player/music-player.component';
 import { MusicPlayerService } from '../../services/music-player.service';
 import { QueueService } from '../../services/queue.service';
-import { UserPlaylistsApiService } from '../../services/user-playlists-api.service';
 import { UserApiService } from '../../services/user-api.service';
-import { UserSongsApiService } from '../../services/user-songs-api.service';
+import { SongApiService } from '../../services/song-api.service';
+import { PlaylistApiService } from '../../services/playlist-api.service';
 import { SongQueueComponent } from '../../components/song-queue/song-queue.component';
 
 @Component({
@@ -24,8 +24,8 @@ import { SongQueueComponent } from '../../components/song-queue/song-queue.compo
     MusicPlayerService,
     QueueService,
     UserApiService,
-    UserPlaylistsApiService,
-    UserSongsApiService,
+    SongApiService,
+    PlaylistApiService,
   ],
   templateUrl: './platform.component.html',
   styleUrl: './platform.component.scss'

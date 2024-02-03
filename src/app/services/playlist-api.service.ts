@@ -11,7 +11,7 @@ type PlaylistDto = {
 @Injectable({
   providedIn: 'root'
 })
-export class UserPlaylistsApiService {
+export class PlaylistApiService {
 
   constructor() { }
 

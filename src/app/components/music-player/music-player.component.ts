@@ -1,4 +1,4 @@
-import { Component, EventEmitter, HostListener, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { jamHeart, jamHeartF, jamUnorderedList } from '@ng-icons/jam-icons';
 import { Song } from '../../interfaces/song';
@@ -7,9 +7,10 @@ import { MusicPlayerService } from '../../services/music-player.service';
 import { VolumeControlComponent } from '../volume-control/volume-control.component';
 import { PlaybackControlComponent } from '../playback-control/playback-control.component';
 import { RepeatMode } from '../../interfaces/types';
-import { Subscription } from 'rxjs';
+import { Subscription, firstValueFrom } from 'rxjs';
 import { QueueService } from '../../services/queue.service';
 import { ShortcutModalComponent } from '../shortcut-modal/shortcut-modal.component';
+import { SongApiService } from '../../services/song-api.service';
 
 @Component({
   selector: 'app-music-player',
@@ -31,13 +32,12 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
   @ViewChild('playbackControl') playbackControlRef!: PlaybackControlComponent;
   @ViewChild('volumeControl') volumeControlRef!: VolumeControlComponent;
 
-  @Output('like') likeChange: EventEmitter<boolean> = new EventEmitter<boolean>();
-
   activeSong?: Song;
   subjectSubscriber?: Subscription;
   showingShortcutsModal: boolean = false;
 
   constructor(
+    private songService: SongApiService,
     private musicPlayerService: MusicPlayerService,
     private queueService: QueueService,
   ) { }
@@ -195,14 +195,14 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
   like() {
     if (this.activeSong?.hasOwnProperty('isLiked')) {
       this.activeSong.isLiked = true;
-      this.likeChange.emit(this.activeSong.isLiked);
+      firstValueFrom(this.songService.likeSong(this.activeSong.id));
     }
   }
 
   unlike() {
     if (this.activeSong?.hasOwnProperty('isLiked')) {
       this.activeSong.isLiked = false;
-      this.likeChange.emit(this.activeSong.isLiked);
+      firstValueFrom(this.songService.unlikeSong(this.activeSong.id));
     }
   }
 }

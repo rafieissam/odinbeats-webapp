@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { RepeatMode } from '../interfaces/types';
 import { Song } from '../interfaces/song';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, firstValueFrom } from 'rxjs';
 import { QueueService } from './queue.service';
 import { Playlist } from '../interfaces/playlist';
+import { SongApiService } from './song-api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,10 @@ export class MusicPlayerService {
   repeatMode: RepeatMode = "off";
   isShuffling: boolean = false;
 
-  constructor(private queueService: QueueService) {
+  constructor(
+    private queueService: QueueService,
+    private songService: SongApiService,
+  ) {
     this.initAudioPlayer();
     this.monitorQueueChanges();
   }
@@ -78,6 +82,7 @@ export class MusicPlayerService {
     this.activeSong = { ...song };
     this.activeSongId = song.id;
     this.setSongPath(this.activeSong.path);
+    firstValueFrom(this.songService.registerPlay(this.activeSongId));
     this.activeSongSubject.next(this.activeSong);
   }
 

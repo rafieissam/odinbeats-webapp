@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { UserPlaylistsApiService } from '../../services/user-playlists-api.service';
 import { Playlist } from '../../interfaces/playlist';
 import { DurationToStringPipe } from '../../pipes/duration-to-string.pipe';
 import { CommonModule } from '@angular/common';
@@ -8,6 +7,7 @@ import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { jamPlusRectangle } from '@ng-icons/jam-icons';
 import { LoaderComponent } from '../../components/loader/loader.component';
 import { MusicPlayerService } from '../../services/music-player.service';
+import { PlaylistApiService } from '../../services/playlist-api.service';
 
 @Component({
   selector: 'app-library',
@@ -30,7 +30,7 @@ export class LibraryComponent implements OnInit {
   playlists: Playlist[] = [];
 
   constructor(
-    private playlistService: UserPlaylistsApiService,
+    private playlistService: PlaylistApiService,
     private musicPlayerService: MusicPlayerService,
   ) { }
 

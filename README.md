@@ -4,14 +4,15 @@
 
 Service:
     - Connect services to real backend
+        - songs - done
+        - playlists
     - add caching in api services
-
-Platform:
-    - add shortcuts modal (?) - done
+        - songs - done
+        - playlists
 
 Home:
-    - fill @emptys
     - create components (most_played/trending, liked_songs, playlists)
+        - fill @emptys
 
 Playlist:
     - create new playlist and navigate to it
@@ -21,12 +22,12 @@ Playlist:
 Songs:
     - Search
     - Add to playlist
-    - Like/Unlike songs
+    - Like/Unlike songs - done
+    - Register song plays - done
 
 Settings:
     - Edit user
     - Profile Page
 
 Mobile Design
-
 Unit Tests

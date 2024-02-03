@@ -4,16 +4,15 @@ import { RouterModule } from '@angular/router';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { jamSearch, jamUserCircle } from '@ng-icons/jam-icons';
 import { Song } from '../../interfaces/song';
-import { UserSongsApiService } from '../../services/user-songs-api.service';
-import { UserPlaylistsApiService } from '../../services/user-playlists-api.service';
 import { Playlist } from '../../interfaces/playlist';
 import { DurationToMinsPipe } from '../../pipes/duration-to-mins.pipe';
 import { DurationToStringPipe } from '../../pipes/duration-to-string.pipe';
 import { MusicPlayerService } from '../../services/music-player.service';
 import { LoaderComponent } from '../../components/loader/loader.component';
-import { SongsApiService } from '../../services/songs-api.service';
 import { User } from '../../interfaces/user';
 import { UserPillComponent } from '../../components/user-pill/user-pill.component';
+import { PlaylistApiService } from '../../services/playlist-api.service';
+import { SongApiService } from '../../services/song-api.service';
 
 @Component({
   selector: 'app-home',
@@ -46,22 +45,21 @@ export class HomeComponent {
 
   constructor(
     private musicPlayerService: MusicPlayerService,
-    private songService: SongsApiService,
-    private userSongService: UserSongsApiService,
-    private userPlaylistService: UserPlaylistsApiService,
+    private songService: SongApiService,
+    private playlistService: PlaylistApiService,
   ) {
     this.mostPlayedLoading = true;
-    this.songService.getMostPlayedSongs().subscribe(songs => {
+    this.songService.getTopTen().subscribe(songs => {
       this.myMostPlayedSongs = songs;
       this.mostPlayedLoading = false;
     });
     this.likesLoading = true;
-    this.userSongService.getLikedSongs().subscribe(songs => {
+    this.songService.watchLikedSongs().subscribe(songs => {
       this.likedSongs = songs;
       this.likesLoading = false;
     });
     this.playlistsLoading = true;
-    this.userPlaylistService.getUserPlaylists().subscribe(playlists => {
+    this.playlistService.getUserPlaylists().subscribe(playlists => {
       this.myPlaylists = playlists;
       this.playlistsLoading = false;
     });

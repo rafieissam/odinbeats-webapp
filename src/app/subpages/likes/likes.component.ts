@@ -8,8 +8,8 @@ import { DurationToMinsPipe } from '../../pipes/duration-to-mins.pipe';
 import { jamPlay, jamMusic, jamClock, jamMic } from '@ng-icons/jam-icons';
 import { Song } from '../../interfaces/song';
 import { MusicPlayerService } from '../../services/music-player.service';
-import { UserSongsApiService } from '../../services/user-songs-api.service';
 import { PlaylistSong } from '../../interfaces/playlist-song';
+import { SongApiService } from '../../services/song-api.service';
 
 @Component({
   selector: 'app-likes',
@@ -34,7 +34,7 @@ export class LikesComponent implements OnInit {
   songs: Song[] = [];
 
   constructor(
-    private songService: UserSongsApiService,
+    private songService: SongApiService,
     private musicPlayerService: MusicPlayerService,
   ) { }
 
@@ -59,7 +59,7 @@ export class LikesComponent implements OnInit {
 
   likedSongs() {
     this.isLoading = true;
-    this.songService.getLikedSongs().subscribe(songs => {
+    this.songService.watchLikedSongs().subscribe(songs => {
       this.songs = songs;
       this.generateFakePlaylist();
       this.formatArtists();

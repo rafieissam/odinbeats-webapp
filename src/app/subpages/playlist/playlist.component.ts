@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Playlist } from '../../interfaces/playlist';
-import { UserPlaylistsApiService } from '../../services/user-playlists-api.service';
 import { CommonModule } from '@angular/common';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { LoaderComponent } from '../../components/loader/loader.component';
@@ -10,6 +9,7 @@ import { DurationToMinsPipe } from '../../pipes/duration-to-mins.pipe';
 import { jamPlay, jamMusic, jamClock, jamMic } from '@ng-icons/jam-icons';
 import { Song } from '../../interfaces/song';
 import { MusicPlayerService } from '../../services/music-player.service';
+import { PlaylistApiService } from '../../services/playlist-api.service';
 
 @Component({
   selector: 'app-playlist',
@@ -36,7 +36,7 @@ export class PlaylistComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private playlistService: UserPlaylistsApiService,
+    private playlistService: PlaylistApiService,
     private musicPlayerService: MusicPlayerService,
   ) { }
 
