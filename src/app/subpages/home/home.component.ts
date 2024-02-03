@@ -12,9 +12,8 @@ import { DurationToStringPipe } from '../../pipes/duration-to-string.pipe';
 import { MusicPlayerService } from '../../services/music-player.service';
 import { LoaderComponent } from '../../components/loader/loader.component';
 import { SongsApiService } from '../../services/songs-api.service';
-import { AuthService } from '../../services/auth.service';
 import { User } from '../../interfaces/user';
-import { UserService } from '../../services/user.service';
+import { UserPillComponent } from '../../components/user-pill/user-pill.component';
 
 @Component({
   selector: 'app-home',
@@ -26,6 +25,7 @@ import { UserService } from '../../services/user.service';
     LoaderComponent,
     DurationToMinsPipe,
     DurationToStringPipe,
+    UserPillComponent,
   ],
   providers: [
     provideIcons({ jamSearch, jamUserCircle }),
@@ -46,13 +46,10 @@ export class HomeComponent {
 
   constructor(
     private musicPlayerService: MusicPlayerService,
-    private userService: UserService,
     private songService: SongsApiService,
     private userSongService: UserSongsApiService,
     private userPlaylistService: UserPlaylistsApiService,
   ) {
-    // this.user = this.userService.getMe();
-    console.log(this.user);
     this.mostPlayedLoading = true;
     this.songService.getMostPlayedSongs().subscribe(songs => {
       this.myMostPlayedSongs = songs;
