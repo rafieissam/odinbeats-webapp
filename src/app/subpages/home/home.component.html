@@ -9,9 +9,12 @@
         </label>
         <a class="bg-color-7 rounded-full py-2 pl-3 pr-4 text-sm transition flex items-center">
             <ng-icon name="jamUserCircle" class="mr-2" />
-            User
+            {{ user ? user.name : "User" }}
         </a>
     </div>
+    <pre>
+        {{ user | json }}
+    </pre>
     <div class="mt-12">
         <div class="text-xl font-bold text-white tracking-wide">
             Most Played

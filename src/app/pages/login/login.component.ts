@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { LogoComponent } from '../../components/logo/logo.component';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 type FormInput = {
   name: string;
@@ -9,7 +11,6 @@ type FormInput = {
   type: string;
   validator: ValidatorFn | null;
 };
-
 
 @Component({
   selector: 'app-login',
@@ -40,6 +41,11 @@ export class LoginComponent implements OnInit {
   isLoading = false;
   form!: FormGroup;
   errorMsg?: string;
+
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+  ) { }
 
   ngOnInit(): void {
     this.switchToLogin();
@@ -115,22 +121,24 @@ export class LoginComponent implements OnInit {
     this.form.disable();
     this.isLoading = true;
     const formValue = this.form.value;
-    // To Update: Change this Promise
-    new Promise<void>((resolve, reject) => {
-      setTimeout(() => {
-        if (Math.random() * 100 < 90) {
-          reject();
+    let signinDto = {
+      email: formValue.email,
+      password: formValue.password,
+    };
+    this.authService.signin(signinDto).subscribe({
+      next: resp => {
+        this.router.navigate(['/']);
+      },
+      error: err => {
+        if (err.status == 403) {
+          this.errorMsg = 'Incorrect email or password!';
         } else {
-          resolve();
+          console.error(err);
+          this.errorMsg = 'Something wrong occurred please try again later!';
         }
-      }, 2000);
-    }).then(() => {
-      // Reroute
-      console.log("Reroute");
-    }).catch(() => {
-      this.errorMsg = 'Incorrect email or password!';
-      this.form.enable();
-      this.isLoading = false;
+        this.form.enable();
+        this.isLoading = false;
+      },
     });
   }
 
@@ -138,22 +146,25 @@ export class LoginComponent implements OnInit {
     this.form.disable();
     this.isLoading = true;
     const formValue = this.form.value;
-    // To Update: Change this Promise
-    new Promise<void>((resolve, reject) => {
-      setTimeout(() => {
-        if (Math.random() * 100 < 90) {
-          reject();
+    let signupDto = {
+      name: formValue.name,
+      email: formValue.email,
+      password: formValue.password,
+    };
+    this.authService.signup(signupDto).subscribe({
+      next: resp => {
+        this.router.navigate(['/']);
+      },
+      error: err => {
+        if (err.status == 409) {
+          this.errorMsg = 'Email is already registered!';
         } else {
-          resolve();
+          console.error(err);
+          this.errorMsg = 'Something wrong occurred please try again later!';
         }
-      }, 2000);
-    }).then(() => {
-      // Reroute
-      console.log("Reroute");
-    }).catch(() => {
-      // this.errorMsg = 'Incorrect email or password!';
-      this.form.enable();
-      this.isLoading = false;
+        this.form.enable();
+        this.isLoading = false;
+      },
     });
   }
 }

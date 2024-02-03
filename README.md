@@ -26,8 +26,10 @@ Songs:
 - Mobile Design
 
 Auth:
-- Profile Page
-- Guards
-- AuthService
+- Guards - done
+- AuthService - done
+- HTTP Auth Interceptor - done
+
+User:
 - UserService
-- HTTP Interceptor
+- Profile Page
