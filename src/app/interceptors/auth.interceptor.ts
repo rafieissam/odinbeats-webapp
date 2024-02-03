@@ -23,7 +23,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
           }),
           catchError(error => {
             isRefreshing = false;
-            if (error.status == 403) {
+            if (error.status == 400 || error.status == 403) {
               authService.signout();
             }
             return throwError(() => error);

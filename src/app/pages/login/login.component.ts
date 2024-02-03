@@ -127,7 +127,7 @@ export class LoginComponent implements OnInit {
     };
     this.authService.signin(signinDto).subscribe({
       next: resp => {
-        this.router.navigate(['/']);
+        this.router.navigateByUrl('/');
       },
       error: err => {
         if (err.status == 403) {
@@ -153,7 +153,7 @@ export class LoginComponent implements OnInit {
     };
     this.authService.signup(signupDto).subscribe({
       next: resp => {
-        this.router.navigate(['/']);
+        this.router.navigateByUrl('/');
       },
       error: err => {
         if (err.status == 409) {

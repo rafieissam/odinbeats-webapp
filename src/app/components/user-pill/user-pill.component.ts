@@ -1,10 +1,11 @@
 import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
-import { jamUserCircle, jamCog } from '@ng-icons/jam-icons';
+import { jamUserCircle, jamCog, jamLogOut } from '@ng-icons/jam-icons';
 import { User } from '../../interfaces/user';
 import { UserService } from '../../services/user.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-user-pill',
@@ -15,7 +16,7 @@ import { RouterModule } from '@angular/router';
     NgIconComponent,
   ],
   providers: [
-    provideIcons({ jamUserCircle, jamCog })
+    provideIcons({ jamUserCircle, jamCog, jamLogOut })
   ],
   templateUrl: './user-pill.component.html',
   styleUrl: './user-pill.component.scss'
@@ -26,7 +27,10 @@ export class UserPillComponent implements OnInit {
   user?: User;
   isActive: boolean = false;
   
-  constructor(private userService: UserService) { }
+  constructor(
+    private authService: AuthService,
+    private userService: UserService,
+  ) { }
 
   ngOnInit(): void {
     this.userService.getMe().subscribe(user => {
@@ -39,6 +43,10 @@ export class UserPillComponent implements OnInit {
     if (this.isActive && !this.pillRef.nativeElement.contains(event.target)) {
       this.closeDropdown();
     }
+  }
+
+  signout() {
+    this.authService.signout();
   }
 
   toggleDropdown() {

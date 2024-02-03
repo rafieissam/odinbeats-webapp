@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
 
 @Component({
@@ -12,7 +11,6 @@ import { UserService } from './services/user.service';
     RouterOutlet,
   ],
   providers: [
-    AuthService,
     UserService,
   ],
   templateUrl: './app.component.html',

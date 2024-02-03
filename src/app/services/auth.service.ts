@@ -75,7 +75,7 @@ export class AuthService {
   signout() {
     this.removeCurrentUser();
     this.unsetAccessToken();
-    this.router.navigate(['/login']);
+    this.router.navigateByUrl('/login');
   }
 
   handleSignin(resp: AuthResp) {
