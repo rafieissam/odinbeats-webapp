@@ -1,6 +1,6 @@
-import { Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
-import { jamHeart, jamHeartF, jamUnorderedList } from '@ng-icons/jam-icons';
+import { jamHeart, jamHeartF, jamPlusCircle, jamUnorderedList } from '@ng-icons/jam-icons';
 import { Song } from '../../interfaces/song';
 import { CommonModule } from '@angular/common';
 import { MusicPlayerService } from '../../services/music-player.service';
@@ -11,6 +11,8 @@ import { Subscription, firstValueFrom } from 'rxjs';
 import { QueueService } from '../../services/queue.service';
 import { ShortcutModalComponent } from '../shortcut-modal/shortcut-modal.component';
 import { SongApiService } from '../../services/song-api.service';
+import { PlaylistApiService } from '../../services/playlist-api.service';
+import { Playlist } from '../../interfaces/playlist';
 
 @Component({
   selector: 'app-music-player',
@@ -23,7 +25,7 @@ import { SongApiService } from '../../services/song-api.service';
     ShortcutModalComponent,
   ],
   providers: [
-    provideIcons({ jamHeart, jamHeartF, jamUnorderedList }),
+    provideIcons({ jamHeart, jamHeartF, jamPlusCircle, jamUnorderedList }),
   ],
   templateUrl: './music-player.component.html',
   styleUrl: './music-player.component.scss'
@@ -31,12 +33,16 @@ import { SongApiService } from '../../services/song-api.service';
 export class MusicPlayerComponent implements OnInit, OnDestroy {
   @ViewChild('playbackControl') playbackControlRef!: PlaybackControlComponent;
   @ViewChild('volumeControl') volumeControlRef!: VolumeControlComponent;
+  @ViewChild('playlistSelector') playlistSelectorRef!: ElementRef;
 
   activeSong?: Song;
   subjectSubscriber?: Subscription;
   showingShortcutsModal: boolean = false;
+  addingToPlaylist: boolean = false;
+  selectablePlaylists: Playlist[] = [];
 
   constructor(
+    private playlistService: PlaylistApiService,
     private songService: SongApiService,
     private musicPlayerService: MusicPlayerService,
     private queueService: QueueService,
@@ -50,6 +56,9 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
         this.playbackControlRef.isPlaying = true;
         this.onPlay();
       });
+    });
+    this.playlistService.watchAll().subscribe(playlists => {
+      this.selectablePlaylists = playlists;
     });
   }
 
@@ -122,6 +131,24 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
 
   toggleShortcutsModal() {
     this.showingShortcutsModal = !this.showingShortcutsModal;
+  }
+
+  // Add to Playlist
+  @HostListener('document:click', ['$event'])
+  onMouseDown(event: MouseEvent) {
+    if (this.addingToPlaylist && !this.playlistSelectorRef.nativeElement.contains(event.target)) {
+      this.addingToPlaylist = false;
+    }
+  }
+
+  addToPlaylist() {
+    this.addingToPlaylist = true;
+  }
+
+  selectTargetPlaylist(playlistId: string) {
+    this.addingToPlaylist = false;
+    if (!this.activeSong) return;
+    firstValueFrom(this.playlistService.addSongToPlaylist(playlistId, this.activeSong.id));
   }
 
   // Queue

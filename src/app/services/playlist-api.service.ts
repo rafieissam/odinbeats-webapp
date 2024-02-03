@@ -89,7 +89,7 @@ export class PlaylistApiService {
         }
       }
     }
-    playlist.image = image;
+    playlist.image = image || './assets/images/playlist_placeholder.png';
     return playlist;
   }
   
@@ -108,18 +108,18 @@ export class PlaylistApiService {
   }
 
   updateOne(playlistId: string, dto: PlaylistUpdateDto) {
-    return this.http.patch<any>(`${this.API_URL}/${playlistId}`, dto).pipe(switchMap(this.refreshAll));
+    return this.http.patch<any>(`${this.API_URL}/${playlistId}`, dto).pipe(switchMap(this.refreshAll.bind(this)));
   }
 
   deleteOne(playlistId: string) {
-    return this.http.delete<any>(`${this.API_URL}/${playlistId}`).pipe(switchMap(this.refreshAll));
+    return this.http.delete<any>(`${this.API_URL}/${playlistId}`).pipe(switchMap(this.refreshAll.bind(this)));
   }
 
   addSongToPlaylist(playlistId: string, songId: string) {
-    return this.http.patch<any>(`${this.API_URL}/${playlistId}/add-song`, { songId }).pipe(switchMap(this.refreshAll));
+    return this.http.patch<any>(`${this.API_URL}/${playlistId}/add-song`, { songId }).pipe(switchMap(this.refreshAll.bind(this)));
   }
 
   removeSongFromPlaylist(playlistId: string, songId: string) {
-    return this.http.patch<any>(`${this.API_URL}/${playlistId}/remove-song`, { songId }).pipe(switchMap(this.refreshAll));
+    return this.http.patch<any>(`${this.API_URL}/${playlistId}/remove-song`, { songId }).pipe(switchMap(this.refreshAll.bind(this)));
   }
 }

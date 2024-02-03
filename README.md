@@ -21,8 +21,9 @@ Playlist:
 
 Songs:
     - Search page
-    - Add to playlist
+    - Add to playlist without playing
     - Like/Unlike without playing
+    - Add to playlist - done
     - Like/Unlike songs - done
     - Register song plays - done
 
@@ -34,5 +35,7 @@ Mobile Design
 Unit Tests
 
 placeholder for playlist artists
-placeholder for images
 show user pill in more pages
+fix color vars
+toasts
+ellipsis texts

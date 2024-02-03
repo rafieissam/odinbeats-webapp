@@ -9,15 +9,30 @@
                     <div class="text-slate-400 text-xs">{{ activeSong?.artist }}</div>
                 </div>
             </div>
-            @if (activeSong?.hasOwnProperty('isLiked')) {
-                <div class="cursor-pointer ml-6 leading-5">
-                    @if (activeSong?.isLiked) {
-                        <ng-icon name="jamHeartF" (click)="unlike()" color="var(--color-7)"></ng-icon>
-                    } @else {
-                        <ng-icon name="jamHeart" (click)="like()"></ng-icon>
-                    }
-                </div>
-            }
+            <div class="cursor-pointer ml-6 leading-5">
+                @if (activeSong?.isLiked) {
+                    <ng-icon name="jamHeartF" (click)="unlike()" color="var(--color-7)"></ng-icon>
+                } @else {
+                    <ng-icon name="jamHeart" (click)="like()"></ng-icon>
+                }
+            </div>
+            <div #playlistSelector class="cursor-pointer ml-2 leading-5">
+                <ng-icon name="jamPlusCircle" (click)="addToPlaylist()"></ng-icon>
+                @if (addingToPlaylist) {
+                    <div class="absolute bottom-full left-0 mb-2 w-32 bg-[var(--color-5)] rounded-md shadow-md z-10">
+                        <div class="py-2 text-white text-xs px-4 font-bold">
+                            Add to Playlist
+                        </div>
+                        <div class="mb-2">
+                            @for (playlist of selectablePlaylists; track playlist.id) {
+                                <div class="py-1 text-slate-500 text-xs px-4 hover:text-slate-300 hover:font-bold cursor-pointer" (click)="selectTargetPlaylist(playlist.id)">
+                                    {{ playlist.name }}
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
         </div>
         <div class="w-1/3">
             <app-playback-control

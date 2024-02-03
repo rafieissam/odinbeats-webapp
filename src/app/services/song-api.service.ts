@@ -68,10 +68,10 @@ export class SongApiService {
   }
 
   likeSong(songId: string): Observable<any> {
-    return this.http.patch<any>(`${this.API_URL}/${songId}/like`, {}).pipe(switchMap(this.refreshLikedSongs));
+    return this.http.patch<any>(`${this.API_URL}/${songId}/like`, {}).pipe(switchMap(this.refreshLikedSongs.bind(this)));
   }
 
   unlikeSong(songId: string): Observable<any> {
-    return this.http.patch<any>(`${this.API_URL}/${songId}/unlike`, {}).pipe(switchMap(this.refreshLikedSongs));
+    return this.http.patch<any>(`${this.API_URL}/${songId}/unlike`, {}).pipe(switchMap(this.refreshLikedSongs.bind(this)));
   }
 }
