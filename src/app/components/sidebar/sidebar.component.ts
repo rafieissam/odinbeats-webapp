@@ -6,6 +6,7 @@ import { jamHome, jamHomeF, jamHeart, jamHeartF, jamBook, jamBookF, jamDisc, jam
 import { LogoComponent } from '../logo/logo.component';
 import { Playlist } from '../../interfaces/playlist';
 import { PlaylistApiService } from '../../services/playlist-api.service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-sidebar',
@@ -34,12 +35,12 @@ export class SidebarComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.playlistService.getUserPlaylists().subscribe(playlists => {
+    this.playlistService.watchAll().subscribe(playlists => {
       this.playlists = playlists;
     });
   }
 
   createPlaylist() {
-    this.playlistService.createUserPlaylist();
+    firstValueFrom(this.playlistService.createOne());
   }
 }

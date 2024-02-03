@@ -66,7 +66,7 @@ export class PlaylistComponent implements OnInit {
 
   fetchPlaylist() {
     this.isLoading = true;
-    this.playlistService.getUserPlaylist(this.playlistId).subscribe(playlist => {
+    this.playlistService.getOne(this.playlistId).subscribe(playlist => {
       this.playlist = playlist;
       this.mapSongs();
       this.formatArtists();

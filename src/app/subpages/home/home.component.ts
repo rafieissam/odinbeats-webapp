@@ -59,7 +59,7 @@ export class HomeComponent {
       this.likesLoading = false;
     });
     this.playlistsLoading = true;
-    this.playlistService.getUserPlaylists().subscribe(playlists => {
+    this.playlistService.watchAll().subscribe(playlists => {
       this.myPlaylists = playlists;
       this.playlistsLoading = false;
     });

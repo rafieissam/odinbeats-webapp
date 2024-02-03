@@ -16,8 +16,7 @@ type GetSongsDto = {
 })
 export class SongApiService {
   private readonly API_URL = 'http://localhost:3000/songs';
-
-  mostPlayedSongs: Song[] = [];
+  
   likedSongs: Song[] = [];
   likedSongsSubject: BehaviorSubject<Song[]> = new BehaviorSubject<Song[]>([]);
   likedSongsObservable: Observable<Song[]> = this.likedSongsSubject.asObservable();
@@ -69,18 +68,10 @@ export class SongApiService {
   }
 
   likeSong(songId: string): Observable<any> {
-    return this.http.patch<any>(`${this.API_URL}/${songId}/like`, {}).pipe(
-      switchMap(() => {
-        return this.refreshLikedSongs();
-      }),
-    );
+    return this.http.patch<any>(`${this.API_URL}/${songId}/like`, {}).pipe(switchMap(this.refreshLikedSongs));
   }
 
   unlikeSong(songId: string): Observable<any> {
-    return this.http.patch<any>(`${this.API_URL}/${songId}/unlike`, {}).pipe(
-      switchMap(() => {
-        return this.refreshLikedSongs();
-      }),
-    );
+    return this.http.patch<any>(`${this.API_URL}/${songId}/unlike`, {}).pipe(switchMap(this.refreshLikedSongs));
   }
 }

@@ -8,6 +8,7 @@ import { jamPlusRectangle } from '@ng-icons/jam-icons';
 import { LoaderComponent } from '../../components/loader/loader.component';
 import { MusicPlayerService } from '../../services/music-player.service';
 import { PlaylistApiService } from '../../services/playlist-api.service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-library',
@@ -40,13 +41,13 @@ export class LibraryComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoading = true;
-    this.playlistService.getUserPlaylists().subscribe(playlists => {
+    this.playlistService.watchAll().subscribe(playlists => {
       this.playlists = playlists;
       this.isLoading = false;
     });
   }
 
   createPlaylist() {
-    this.playlistService.createUserPlaylist();
+    firstValueFrom(this.playlistService.createOne());
   }
 }
