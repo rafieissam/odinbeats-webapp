@@ -62,7 +62,8 @@ export class SearchComponent implements OnInit {
   }
 
   onSearch() {
-    this.router.navigate(['/search'], { queryParams: { text: this.searchText }});
+      if (!this.searchText.trim().length) return;
+      this.router.navigate(['/search'], { queryParams: { text: this.searchText }});
   }
 
   playSong(song: Song) {

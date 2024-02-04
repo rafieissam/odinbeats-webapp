@@ -10,6 +10,7 @@ import { jamPlay, jamMusic, jamClock, jamMic } from '@ng-icons/jam-icons';
 import { Song } from '../../interfaces/song';
 import { MusicPlayerService } from '../../services/music-player.service';
 import { PlaylistApiService } from '../../services/playlist-api.service';
+import { UserPillComponent } from '../../components/user-pill/user-pill.component';
 
 @Component({
   selector: 'app-playlist',
@@ -20,6 +21,7 @@ import { PlaylistApiService } from '../../services/playlist-api.service';
     LoaderComponent,
     DurationToMinsPipe,
     DurationToStringPipe,
+    UserPillComponent,
   ],
   providers: [
     provideIcons({ jamPlay, jamMusic, jamClock, jamMic })

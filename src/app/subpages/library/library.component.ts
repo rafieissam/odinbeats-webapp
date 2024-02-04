@@ -9,6 +9,7 @@ import { LoaderComponent } from '../../components/loader/loader.component';
 import { MusicPlayerService } from '../../services/music-player.service';
 import { PlaylistApiService } from '../../services/playlist-api.service';
 import { firstValueFrom } from 'rxjs';
+import { UserPillComponent } from '../../components/user-pill/user-pill.component';
 
 @Component({
   selector: 'app-library',
@@ -19,6 +20,7 @@ import { firstValueFrom } from 'rxjs';
     NgIconComponent,
     LoaderComponent,
     DurationToStringPipe,
+    UserPillComponent,
   ],
   providers: [
     provideIcons({ jamPlusRectangle })

@@ -10,6 +10,7 @@ import { Song } from '../../interfaces/song';
 import { MusicPlayerService } from '../../services/music-player.service';
 import { PlaylistSong } from '../../interfaces/playlist-song';
 import { SongApiService } from '../../services/song-api.service';
+import { UserPillComponent } from '../../components/user-pill/user-pill.component';
 
 @Component({
   selector: 'app-likes',
@@ -20,6 +21,7 @@ import { SongApiService } from '../../services/song-api.service';
     LoaderComponent,
     DurationToMinsPipe,
     DurationToStringPipe,
+    UserPillComponent,
   ],
   providers: [
     provideIcons({ jamPlay, jamMusic, jamClock, jamMic })

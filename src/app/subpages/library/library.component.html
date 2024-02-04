@@ -1,10 +1,13 @@
-<div class="flex items-center">
-    <div class="text-xl font-bold text-white tracking-wide">
-        Library
+<div class="flex items-start justify-between">
+    <div class="flex items-center">
+        <div class="text-xl font-bold text-white tracking-wide">
+            Library
+        </div>
+        <a class="flex items-center" (click)="createPlaylist()">
+            <ng-icon class="cursor-pointer ml-4" name="jamPlusRectangle" color="var(--color-7)"></ng-icon>
+        </a>
     </div>
-    <a class="flex items-center" (click)="createPlaylist()">
-        <ng-icon class="cursor-pointer ml-4" name="jamPlusRectangle" color="var(--color-7)"></ng-icon>
-    </a>
+    <app-user-pill></app-user-pill>
 </div>
 <div class="mt-10">
     <div class="flex items-center text-slate-400 text-xs border-b-2 border-slate-600 py-2 px-2">
