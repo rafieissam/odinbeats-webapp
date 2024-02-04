@@ -20,6 +20,5 @@ Settings:
     - Profile Page
 
 Misc:
-    - fix color vars
     - toasts (added/removed to playlist, liked/unliked)
     - ellipsis texts

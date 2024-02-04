@@ -12,49 +12,19 @@
     position: relative;
     box-sizing: border-box;
     &:focus-visible {
-        outline: 1px solid var(--color-7);
+        outline: 1px solid var(--primary-red);
         outline-offset: 1px;
     }
 }
 
 :root {
-    --color-1: #241F21;
-    --color-2: #827f80;
-    --color-3: #F4F3EE;
-    --color-4: #A52422;
-    --color-5: #2C2729;
-    --color-6: #342F31;
-    --color-7: #AD3836;
+    --primary-dark: #241F21;
+    --secondary-dark: #2C2729;
+    --primary-gray: #827f80;
+    --primary-light: #F4F3EE;
+    --primary-red: #AD3836;
 }
 
 body {
-    background-color: var(--color-1);
-}
-
-.text-color-7 {
-    color: var(--color-7);
-}
-
-.bg-color-5 {
-    background-color: var(--color-5);
-}
-
-.bg-color-6 {
-    background-color: var(--color-6);
-}
-
-.bg-color-7 {
-    background-color: var(--color-7) !important;
-}
-
-.hover_bg-color-4:hover {
-    background-color: var(--color-4) !important;
-}
-
-.hover_bg-color-5:hover {
-    background-color: var(--color-5) !important;
-}
-
-.hover_bg-color-7:hover {
-    background-color: var(--color-7) !important;
+    background-color: var(--primary-dark);
 }

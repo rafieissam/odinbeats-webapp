@@ -1,4 +1,4 @@
-<div #pill class="bg-color-7 rounded-full py-2 pl-3 pr-4 text-sm text-slate-200 transition flex items-center cursor-pointer" (click)="toggleDropdown()">
+<div #pill class="bg-[var(--primary-red)] rounded-full py-2 pl-3 pr-4 text-sm text-slate-200 transition flex items-center cursor-pointer" (click)="toggleDropdown()">
     @if (user && user.image) {
         <div class="inline-block bg-cover bg-no-repeat bg-center h-5 w-5 rounded-full mr-2" [ngStyle]="{ backgroundImage: 'url(\'' + user.image + '\')' }"></div>
     } @else {
@@ -6,7 +6,7 @@
     }
     {{ user ? user.name : "User" }}
     @if (isActive) {
-        <div class="absolute top-full right-0 mt-2 w-32 bg-[var(--color-5)] rounded-md shadow-md z-10">
+        <div class="absolute top-full right-0 mt-2 w-32 bg-[var(--secondary-dark)] rounded-md shadow-md z-10">
             <a class="py-2 text-xs px-4 flex items-center cursor-pointer hover:font-bold" routerLink="/settings">
                 <ng-icon name="jamCog" class="mr-2" />
                 Settings

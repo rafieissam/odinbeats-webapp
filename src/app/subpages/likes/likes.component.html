@@ -1,14 +1,14 @@
 <div class="flex items-start justify-between">
     <div>
-        <div class="flex items-start font-bold text-white rounded-md min-w-64 max-w-fit min-h-12 text-4xl" [ngStyle]="{ backgroundColor: isLoading ? 'var(--color-5)' : 'unset' }">
+        <div class="flex items-start font-bold text-white rounded-md min-w-64 max-w-fit min-h-12 text-4xl" [ngStyle]="{ backgroundColor: isLoading ? 'var(--secondary-dark)' : 'unset' }">
             {{ isLoading || !fakePlaylist ? "" : fakePlaylist.name }}
             @if (!isLoading) {
-                <div class="ml-5 cursor-pointer flex justify-center items-center h-12 w-12 rounded-full bg-[var(--color-7)]" (click)="startAtSong(0)">
+                <div class="ml-5 cursor-pointer flex justify-center items-center h-12 w-12 rounded-full bg-[var(--primary-red)]" (click)="startAtSong(0)">
                     <ng-icon name="jamPlay" size="2rem"></ng-icon>
                 </div>
             }
         </div>
-        <div class="mt-2 flex text-slate-400 text-xs rounded-md min-w-32 max-w-fit h-5" [ngStyle]="{ backgroundColor: isLoading ? 'var(--color-5)' : 'unset' }">
+        <div class="mt-2 flex text-slate-400 text-xs rounded-md min-w-32 max-w-fit h-5" [ngStyle]="{ backgroundColor: isLoading ? 'var(--secondary-dark)' : 'unset' }">
             @if (!isLoading) {
                 <ng-icon name="jamMic" class="mr-1" size="1rem"></ng-icon>
                 @if (listOfArtists.trim().length) {
@@ -22,7 +22,7 @@
                 }
             }
         </div>
-        <div class="mt-2 flex text-slate-400 text-xs rounded-md min-w-32 max-w-fit h-5 space-x-4" [ngStyle]="{ backgroundColor: isLoading ? 'var(--color-5)' : 'unset' }">
+        <div class="mt-2 flex text-slate-400 text-xs rounded-md min-w-32 max-w-fit h-5 space-x-4" [ngStyle]="{ backgroundColor: isLoading ? 'var(--secondary-dark)' : 'unset' }">
             @if (!isLoading && fakePlaylist) {
                 <div class="flex items-center">
                     <ng-icon name="jamMusic" class="mr-1" size="1rem"></ng-icon>

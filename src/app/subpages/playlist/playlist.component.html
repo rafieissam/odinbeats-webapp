@@ -1,16 +1,16 @@
 <div class="flex items-start justify-between">
     <div class="flex items-end">
-        <div class="w-44 h-44 rounded-md bg-no-repeat bg-center bg-cover bg-[var(--color-5)]" [ngStyle]="{ backgroundImage: 'url(\'' + playlist?.image + '\')' }"></div>
+        <div class="w-44 h-44 rounded-md bg-no-repeat bg-center bg-cover bg-[var(--secondary-dark)]" [ngStyle]="{ backgroundImage: 'url(\'' + playlist?.image + '\')' }"></div>
         <div class="ml-4">
-            <div class="flex items-end font-bold text-white rounded-md min-w-64 max-w-fit min-h-16 text-6xl" [ngStyle]="{ backgroundColor: isLoading ? 'var(--color-5)' : 'unset' }">
+            <div class="flex items-end font-bold text-white rounded-md min-w-64 max-w-fit min-h-16 text-6xl" [ngStyle]="{ backgroundColor: isLoading ? 'var(--secondary-dark)' : 'unset' }">
                 {{ isLoading || !playlist ? "" : playlist.name }}
                 @if (!isLoading) {
-                    <div class="ml-5 cursor-pointer flex justify-center items-center h-12 w-12 rounded-full bg-[var(--color-7)]" (click)="startAtSong(0)">
+                    <div class="ml-5 cursor-pointer flex justify-center items-center h-12 w-12 rounded-full bg-[var(--primary-red)]" (click)="startAtSong(0)">
                         <ng-icon name="jamPlay" size="2rem"></ng-icon>
                     </div>
                 }
             </div>
-            <div class="mt-2 flex text-slate-400 text-xs rounded-md min-w-32 max-w-fit h-5" [ngStyle]="{ backgroundColor: isLoading ? 'var(--color-5)' : 'unset' }">
+            <div class="mt-2 flex text-slate-400 text-xs rounded-md min-w-32 max-w-fit h-5" [ngStyle]="{ backgroundColor: isLoading ? 'var(--secondary-dark)' : 'unset' }">
                 @if (!isLoading) {
                     <ng-icon name="jamMic" class="mr-1" size="1rem"></ng-icon>
                     @if (listOfArtists.trim().length) {
@@ -24,7 +24,7 @@
                     }
                 }
             </div>
-            <div class="mt-2 flex text-slate-400 text-xs rounded-md min-w-32 max-w-fit h-5 space-x-4" [ngStyle]="{ backgroundColor: isLoading ? 'var(--color-5)' : 'unset' }">
+            <div class="mt-2 flex text-slate-400 text-xs rounded-md min-w-32 max-w-fit h-5 space-x-4" [ngStyle]="{ backgroundColor: isLoading ? 'var(--secondary-dark)' : 'unset' }">
                 @if (!isLoading && playlist) {
                     <div class="flex items-center">
                         <ng-icon name="jamMusic" class="mr-1" size="1rem"></ng-icon>
