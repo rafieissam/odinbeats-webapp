@@ -1,18 +1,18 @@
 import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { jamHeart, jamHeartF, jamPlusCircle, jamUnorderedList } from '@ng-icons/jam-icons';
-import { Song } from '../../interfaces/song';
-import { CommonModule } from '@angular/common';
+import { Subscription, firstValueFrom } from 'rxjs';
 import { MusicPlayerService } from '../../services/music-player.service';
+import { QueueService } from '../../services/queue.service';
+import { SongApiService } from '../../services/song-api.service';
 import { VolumeControlComponent } from '../volume-control/volume-control.component';
 import { PlaybackControlComponent } from '../playback-control/playback-control.component';
-import { RepeatMode } from '../../interfaces/types';
-import { Subscription, firstValueFrom } from 'rxjs';
-import { QueueService } from '../../services/queue.service';
 import { ShortcutModalComponent } from '../shortcut-modal/shortcut-modal.component';
-import { SongApiService } from '../../services/song-api.service';
 import { PlaylistApiService } from '../../services/playlist-api.service';
+import { RepeatMode } from '../../interfaces/types';
 import { Playlist } from '../../interfaces/playlist';
+import { Song } from '../../interfaces/song';
 
 @Component({
   selector: 'app-music-player',

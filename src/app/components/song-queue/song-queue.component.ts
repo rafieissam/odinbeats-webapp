@@ -1,12 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { QueueService } from '../../services/queue.service';
-import { Song } from '../../interfaces/song';
-import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
-import { DurationToMinsPipe } from '../../pipes/duration-to-mins.pipe';
-import { MusicPlayerService } from '../../services/music-player.service';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { jamClose, jamDisc } from '@ng-icons/jam-icons';
+import { Subscription } from 'rxjs';
+import { MusicPlayerService } from '../../services/music-player.service';
+import { QueueService } from '../../services/queue.service';
+import { DurationToMinsPipe } from '../../pipes/duration-to-mins.pipe';
+import { Song } from '../../interfaces/song';
 
 @Component({
   selector: 'app-song-queue',

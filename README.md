@@ -2,9 +2,10 @@
 
 ## Remaining ToDo
 
-Home:
-    - create components (most_played/trending, liked_songs, playlists)
-        - fill @emptys
+Note:
+Mobile Design
+Unit Tests
+
 
 Playlist:
     - rename playlist - only service done
@@ -19,12 +20,6 @@ Settings:
     - Profile Page
 
 Misc:
-    - componentize wat can be componentized
-    - placeholder for playlist artists
-    - show user pill in more pages
     - fix color vars
-    - toasts
+    - toasts (added/removed to playlist, liked/unliked)
     - ellipsis texts
-
-Mobile Design
-Unit Tests

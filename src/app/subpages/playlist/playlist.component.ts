@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Playlist } from '../../interfaces/playlist';
 import { CommonModule } from '@angular/common';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
-import { LoaderComponent } from '../../components/loader/loader.component';
-import { DurationToStringPipe } from '../../pipes/duration-to-string.pipe';
-import { DurationToMinsPipe } from '../../pipes/duration-to-mins.pipe';
 import { jamPlay, jamMusic, jamClock, jamMic } from '@ng-icons/jam-icons';
-import { Song } from '../../interfaces/song';
 import { MusicPlayerService } from '../../services/music-player.service';
 import { PlaylistApiService } from '../../services/playlist-api.service';
+import { LoaderComponent } from '../../components/loader/loader.component';
 import { UserPillComponent } from '../../components/user-pill/user-pill.component';
+import { SongListComponent } from '../../components/song-list/song-list.component';
+import { DurationToStringPipe } from '../../pipes/duration-to-string.pipe';
+import { DurationToMinsPipe } from '../../pipes/duration-to-mins.pipe';
+import { Playlist } from '../../interfaces/playlist';
+import { Song } from '../../interfaces/song';
 
 @Component({
   selector: 'app-playlist',
@@ -22,6 +23,7 @@ import { UserPillComponent } from '../../components/user-pill/user-pill.componen
     DurationToMinsPipe,
     DurationToStringPipe,
     UserPillComponent,
+    SongListComponent,
   ],
   providers: [
     provideIcons({ jamPlay, jamMusic, jamClock, jamMic })
@@ -41,21 +43,6 @@ export class PlaylistComponent implements OnInit {
     private playlistService: PlaylistApiService,
     private musicPlayerService: MusicPlayerService,
   ) { }
-
-  get activeSongIndex() {
-    if (this.playlist && this.musicPlayerService.activePlaylistId == this.playlist.id) {
-      let index = -1;
-      for (let i = 0; i < this.songs.length; i++) {
-        if (this.songs[i].id == this.musicPlayerService.activeSongId) {
-          index = i;
-          break;
-        }
-      }
-      return index;
-    } else {
-      return -1;
-    }
-  }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(paramMap => {

@@ -1,15 +1,16 @@
-import { ApplicationModule, Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { SongApiService } from '../../services/song-api.service';
-import { Song } from '../../interfaces/song';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { jamSearch } from '@ng-icons/jam-icons';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { SongApiService } from '../../services/song-api.service';
+import { MusicPlayerService } from '../../services/music-player.service';
 import { UserPillComponent } from '../../components/user-pill/user-pill.component';
 import { LoaderComponent } from '../../components/loader/loader.component';
+import { SongListComponent } from '../../components/song-list/song-list.component';
+import { SongSearcherComponent } from '../../components/song-searcher/song-searcher.component';
 import { DurationToMinsPipe } from '../../pipes/duration-to-mins.pipe';
-import { MusicPlayerService } from '../../services/music-player.service';
+import { Song } from '../../interfaces/song';
 
 @Component({
   selector: 'app-search',
@@ -17,10 +18,11 @@ import { MusicPlayerService } from '../../services/music-player.service';
   imports: [
     CommonModule,
     NgIconComponent,
-    FormsModule,
     UserPillComponent,
     LoaderComponent,
     DurationToMinsPipe,
+    SongListComponent,
+    SongSearcherComponent,
   ],
   providers: [
     provideIcons({ jamSearch }),
@@ -36,7 +38,6 @@ export class SearchComponent implements OnInit {
   songs: Song[] = [];
 
   constructor(
-    private router: Router,
     private route: ActivatedRoute,
     private songService: SongApiService,
     private musicPlayerService: MusicPlayerService,
@@ -59,11 +60,6 @@ export class SearchComponent implements OnInit {
         this.isLoading = false;
       });
     });
-  }
-
-  onSearch() {
-      if (!this.searchText.trim().length) return;
-      this.router.navigate(['/search'], { queryParams: { text: this.searchText }});
   }
 
   playSong(song: Song) {

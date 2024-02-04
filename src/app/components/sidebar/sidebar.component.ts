@@ -3,10 +3,10 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { jamHome, jamHomeF, jamHeart, jamHeartF, jamSpeaker, jamSpeakerF, jamBook, jamBookF, jamDisc, jamPlusRectangle } from '@ng-icons/jam-icons';
+import { firstValueFrom } from 'rxjs';
+import { PlaylistApiService } from '../../services/playlist-api.service';
 import { LogoComponent } from '../logo/logo.component';
 import { Playlist } from '../../interfaces/playlist';
-import { PlaylistApiService } from '../../services/playlist-api.service';
-import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-sidebar',

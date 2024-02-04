@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { LogoComponent } from '../../components/logo/logo.component';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
+import { LogoComponent } from '../../components/logo/logo.component';
 
 type FormInput = {
   name: string;

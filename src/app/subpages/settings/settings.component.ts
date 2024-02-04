@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { UserService } from '../../services/user.service';
 import { User } from '../../interfaces/user';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-settings',

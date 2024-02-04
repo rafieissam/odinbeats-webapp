@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { Playlist } from '../../interfaces/playlist';
 import { CommonModule } from '@angular/common';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import { jamPlay, jamMusic, jamClock, jamMic } from '@ng-icons/jam-icons';
+import { SongApiService } from '../../services/song-api.service';
+import { MusicPlayerService } from '../../services/music-player.service';
 import { LoaderComponent } from '../../components/loader/loader.component';
+import { UserPillComponent } from '../../components/user-pill/user-pill.component';
+import { SongListComponent } from '../../components/song-list/song-list.component';
 import { DurationToStringPipe } from '../../pipes/duration-to-string.pipe';
 import { DurationToMinsPipe } from '../../pipes/duration-to-mins.pipe';
-import { jamPlay, jamMusic, jamClock, jamMic } from '@ng-icons/jam-icons';
-import { Song } from '../../interfaces/song';
-import { MusicPlayerService } from '../../services/music-player.service';
 import { PlaylistSong } from '../../interfaces/playlist-song';
-import { SongApiService } from '../../services/song-api.service';
-import { UserPillComponent } from '../../components/user-pill/user-pill.component';
+import { Playlist } from '../../interfaces/playlist';
+import { Song } from '../../interfaces/song';
 
 @Component({
   selector: 'app-likes',
@@ -22,6 +23,7 @@ import { UserPillComponent } from '../../components/user-pill/user-pill.componen
     DurationToMinsPipe,
     DurationToStringPipe,
     UserPillComponent,
+    SongListComponent,
   ],
   providers: [
     provideIcons({ jamPlay, jamMusic, jamClock, jamMic })

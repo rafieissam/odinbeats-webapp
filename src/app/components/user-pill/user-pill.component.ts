@@ -1,11 +1,11 @@
 import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
-import { NgIconComponent, provideIcons } from '@ng-icons/core';
-import { jamUserCircle, jamCog, jamLogOut } from '@ng-icons/jam-icons';
-import { User } from '../../interfaces/user';
-import { UserService } from '../../services/user.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import { jamUserCircle, jamCog, jamLogOut } from '@ng-icons/jam-icons';
+import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
+import { User } from '../../interfaces/user';
 
 @Component({
   selector: 'app-user-pill',

@@ -1,0 +1,15 @@
+<div class="flex items-center justify-between">
+    <div class="text-xl font-bold text-white tracking-wide">
+        Liked Songs
+    </div>
+    <a class="text-white underline" routerLink="/likes">See all</a>
+</div>
+<div class="mt-4">
+    @if (isLoading) {
+        <div class="flex justify-center py-20 w-full">
+            <app-loader></app-loader>
+        </div>
+    } @else {
+        <app-song-list [songs]="likedSongs | slice:0:4"></app-song-list>
+    }
+</div>
