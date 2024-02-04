@@ -1,0 +1,33 @@
+<div class="fixed inset-x-0 inset-y-0 bg-black/40 flex items-center justify-center py-5">
+    <div class="p-8 w-full max-w-md bg-[var(--primary-dark)] shadow-md max-h-full overflow-y-auto">
+        <div class="flex items-center justify-between">
+            <div class="text-lg text-white font-bold">Edit Playlist</div>
+            <ng-icon name="jamClose" class="cursor-pointer" (click)="close()"></ng-icon>
+        </div>
+
+        <div class="mt-4">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()" class="bg-[var(--primary-dark)] shadow-md flex items-center flex-col">
+                <div class="mt-8 space-y-4 w-full flex flex-col items-center">
+                    <input formControlName="name" (input)="trackErrors()" class="w-full max-w-auto text-sm text-slate-700 rounded-sm leading-10 px-4 bg-[var(--primary-light)]" placeholder="Playlist Name" type="text" />
+                </div>
+                @if (errorMsg) {
+                    <div class="mt-2 text-left font-semibold text-xs text-[var(--primary-red)]">
+                        {{ errorMsg }}
+                    </div>
+                }
+                <div class="flex items-center justify-between mt-10 w-full">
+                    <button class="text-white rounded-sm border-2 border-[var(--primary-red)] hover:bg-[var(--primary-red)] px-10 leading-10 transition ease-in-out cursor-pointer"
+                        type="button"
+                        (click)="close()"
+                        [ngStyle]="isSaving ? { background: 'var(--primary-gray)' } : {}"
+                        [disabled]="isSaving"
+                    >Cancel</button>
+                    <button class="text-white rounded-sm bg-[var(--primary-red)] px-10 leading-10 transition ease-in-out cursor-pointer"
+                        [ngStyle]="(!form.valid || form.disabled) ? { background: 'var(--primary-gray)' } : {}"
+                        [disabled]="!form.valid"
+                    >{{ isSaving ? "Saving..." : "Save" }}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

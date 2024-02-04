@@ -2,14 +2,8 @@
 
 ## Remaining ToDo
 
-Note:
 Mobile Design
 Unit Tests
-
-
-Playlist:
-    - rename playlist - only service done
-    - delete playlist - only service done
 
 Songs:
     - Add to playlist without playing

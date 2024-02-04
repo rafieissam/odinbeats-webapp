@@ -1,17 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
-import { jamPlay, jamMusic, jamClock, jamMic } from '@ng-icons/jam-icons';
+import { jamPlay, jamMusic, jamClock, jamMic, jamMoreHorizontalF, jamTrashAlt } from '@ng-icons/jam-icons';
 import { MusicPlayerService } from '../../services/music-player.service';
 import { PlaylistApiService } from '../../services/playlist-api.service';
 import { LoaderComponent } from '../../components/loader/loader.component';
 import { UserPillComponent } from '../../components/user-pill/user-pill.component';
 import { SongListComponent } from '../../components/song-list/song-list.component';
+import { EditPlaylistComponent } from '../../components/edit-playlist/edit-playlist.component';
 import { DurationToStringPipe } from '../../pipes/duration-to-string.pipe';
 import { DurationToMinsPipe } from '../../pipes/duration-to-mins.pipe';
 import { Playlist } from '../../interfaces/playlist';
 import { Song } from '../../interfaces/song';
+import { DeletePlaylistComponent } from '../../components/delete-playlist/delete-playlist.component';
 
 @Component({
   selector: 'app-playlist',
@@ -24,21 +26,29 @@ import { Song } from '../../interfaces/song';
     DurationToStringPipe,
     UserPillComponent,
     SongListComponent,
+    EditPlaylistComponent,
+    DeletePlaylistComponent,
   ],
   providers: [
-    provideIcons({ jamPlay, jamMusic, jamClock, jamMic })
+    provideIcons({ jamPlay, jamMusic, jamClock, jamMic, jamMoreHorizontalF, jamTrashAlt })
   ],
   templateUrl: './playlist.component.html',
   styleUrl: './playlist.component.scss'
 })
 export class PlaylistComponent implements OnInit {
+  @ViewChild('moreButton') moreButtonRef!: ElementRef;
+
   isLoading: boolean = false;
+  isEditing: boolean = false;
+  isDeleting: boolean = false;
+  moreIsOpen: boolean = false;
   playlistId!: string;
   playlist?: Playlist;
   listOfArtists: string = '';
   songs: Song[] = [];
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private playlistService: PlaylistApiService,
     private musicPlayerService: MusicPlayerService,
@@ -93,5 +103,56 @@ export class PlaylistComponent implements OnInit {
   startAtSong(index: number) {
     if (!this.playlist) return;
     this.musicPlayerService.startPlaylist(this.playlist, index);
+  }
+
+  openEditing() {
+    this.isEditing = true;
+  }
+
+  closeEditing() {
+    this.isEditing = false;
+  }
+
+  updatePlaylist(updateDto: any) {
+    this.closeEditing();
+    if (this.playlist) {
+      this.playlist.name = updateDto.name;
+    }
+  }
+
+  openDeleting() {
+    this.closeMore();
+    this.isDeleting = true;
+  }
+
+  closeDeleting() {
+    this.isDeleting = false;
+  }
+
+  deletedPlaylist() {
+    this.router.navigate(['/library']);
+  }
+  
+  @HostListener('document:click', ['$event'])
+  onMouseDown(event: MouseEvent) {
+    if (this.moreIsOpen && !this.moreButtonRef.nativeElement.contains(event.target)) {
+      this.closeMore();
+    }
+  }
+
+  toggleMore() {
+    if (this.moreIsOpen) {
+      this.closeMore();
+    } else {
+      this.openMore();
+    }
+  }
+
+  openMore() {
+    this.moreIsOpen = true;
+  }
+
+  closeMore() {
+    this.moreIsOpen = false;
   }
 }

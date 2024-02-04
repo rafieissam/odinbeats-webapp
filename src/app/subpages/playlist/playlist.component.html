@@ -3,10 +3,23 @@
         <div class="w-44 h-44 rounded-md bg-no-repeat bg-center bg-cover bg-[var(--secondary-dark)]" [ngStyle]="{ backgroundImage: 'url(\'' + playlist?.image + '\')' }"></div>
         <div class="ml-4">
             <div class="flex items-end font-bold text-white rounded-md min-w-64 max-w-fit min-h-16 text-6xl" [ngStyle]="{ backgroundColor: isLoading ? 'var(--secondary-dark)' : 'unset' }">
-                {{ isLoading || !playlist ? "" : playlist.name }}
+                <span (click)="openEditing()" class="cursor-pointer">
+                    {{ isLoading || !playlist ? "" : playlist.name }}
+                </span>
                 @if (!isLoading) {
                     <div class="ml-5 cursor-pointer flex justify-center items-center h-12 w-12 rounded-full bg-[var(--primary-red)]" (click)="startAtSong(0)">
                         <ng-icon name="jamPlay" size="2rem"></ng-icon>
+                    </div>
+                    <div #moreButton class="ml-5 cursor-pointer" (click)="toggleMore()">
+                        <ng-icon name="jamMoreHorizontalF" size="1.5rem"></ng-icon>
+                        @if (moreIsOpen) {
+                            <div class="absolute top-full left-0 mt-2 w-32 bg-[var(--secondary-dark)] rounded-md shadow-md z-10">
+                                <a class="py-2 text-xs px-4 flex items-center cursor-pointer font-normal hover:font-bold" (click)="openDeleting()">
+                                    <ng-icon name="jamTrashAlt" class="mr-2" />
+                                    Delete
+                                </a>
+                            </div>
+                        }
                     </div>
                 }
             </div>
@@ -54,3 +67,8 @@
         <app-song-list class="mt-2" [playlist]="playlist"></app-song-list>
     }
 </div>
+
+@if (playlist) {
+    <app-edit-playlist *ngIf="isEditing" [playlist]="playlist" (save)="updatePlaylist($event)" (close)="closeEditing()"></app-edit-playlist>
+    <app-delete-playlist *ngIf="isDeleting" [playlistId]="playlist.id" (delete)="deletedPlaylist()" (close)="closeDeleting()"></app-delete-playlist>
+}

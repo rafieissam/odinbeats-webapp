@@ -108,7 +108,7 @@ export class PlaylistApiService {
   }
 
   updateOne(playlistId: string, dto: PlaylistUpdateDto) {
-    return this.http.patch<any>(`${this.API_URL}/${playlistId}`, dto).pipe(switchMap(this.refreshAll.bind(this)));
+    return this.http.patch<any>(`${this.API_URL}/${playlistId}`, dto);
   }
 
   deleteOne(playlistId: string) {
