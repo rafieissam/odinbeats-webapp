@@ -10,6 +10,6 @@
             <app-loader></app-loader>
         </div>
     } @else {
-        <app-song-list [songs]="likedSongs | slice:0:4"></app-song-list>
+        <app-song-list [songs]="likedSongs | slice:0:4" [showDetails]="false"></app-song-list>
     }
 </div>
