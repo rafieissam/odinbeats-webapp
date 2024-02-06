@@ -1,5 +1,5 @@
 {
-  "name": "odinbeats-fe",
+  "name": "odinbeats-webapp",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
