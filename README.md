@@ -2,13 +2,11 @@
 
 ## Remaining ToDo
 
-Mobile Design
-Unit Tests
-
-Settings:
-    - Edit user
-    - Profile Page
-
-Misc:
-    - toasts (added/removed to playlist, liked/unliked)
+Clean up design
     - ellipsis texts
+    - Mobile Design
+
+Toasts:
+    - toasts (added/removed to playlist, liked/unliked)
+
+see password

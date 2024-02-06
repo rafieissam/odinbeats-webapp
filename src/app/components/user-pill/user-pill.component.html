@@ -7,10 +7,6 @@
     {{ user ? user.name : "User" }}
     @if (isActive) {
         <div class="absolute top-full right-0 mt-2 w-32 bg-[var(--secondary-dark)] rounded-md shadow-md z-10">
-            <a class="py-2 text-xs px-4 flex items-center cursor-pointer hover:font-bold" routerLink="/settings">
-                <ng-icon name="jamCog" class="mr-2" />
-                Settings
-            </a>
             <a class="py-2 text-xs px-4 flex items-center cursor-pointer hover:font-bold" (click)="signout()">
                 <ng-icon name="jamLogOut" class="mr-2" />
                 Logout

@@ -8,7 +8,7 @@
                 </div>
             }
         </div>
-        <div class="mt-2 flex text-slate-400 text-xs rounded-md min-w-32 max-w-fit h-5" [ngStyle]="{ backgroundColor: isLoading ? 'var(--secondary-dark)' : 'unset' }">
+        <div class="mt-4 flex text-slate-400 text-xs rounded-md min-w-32 max-w-fit h-5" [ngStyle]="{ backgroundColor: isLoading ? 'var(--secondary-dark)' : 'unset' }">
             @if (!isLoading) {
                 <ng-icon name="jamMic" class="mr-1" size="1rem"></ng-icon>
                 @if (listOfArtists.trim().length) {
