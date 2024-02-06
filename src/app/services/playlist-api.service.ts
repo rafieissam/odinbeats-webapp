@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable, concatMap, map, of, shareReplay, switchMap
 import { Playlist } from '../interfaces/playlist';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 
 type PlaylistUpdateDto = {
   name: string;
@@ -12,7 +13,7 @@ type PlaylistUpdateDto = {
   providedIn: 'root'
 })
 export class PlaylistApiService {
-  private readonly API_URL = 'http://localhost:3000/playlists';
+  private readonly API_URL = environment.API_BASE_URL + '/playlists';
   
   playlists: Playlist[] = [];
   playlistsSubject: BehaviorSubject<Playlist[]> = new BehaviorSubject<Playlist[]>([]);

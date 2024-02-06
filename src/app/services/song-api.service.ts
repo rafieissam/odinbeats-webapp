@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, concatMap, switchMap, tap } from 'rxjs';
 import { Song } from '../interfaces/song';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 type GetSongsDto = {
   text?: string;
@@ -15,7 +16,7 @@ type GetSongsDto = {
   providedIn: 'root'
 })
 export class SongApiService {
-  private readonly API_URL = 'http://localhost:3000/songs';
+  private readonly API_URL = environment.API_BASE_URL + '/songs';
   
   likedSongs: Song[] = [];
   likedSongsSubject: BehaviorSubject<Song[]> = new BehaviorSubject<Song[]>([]);

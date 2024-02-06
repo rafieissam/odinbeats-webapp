@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { map } from 'rxjs';
 import { User } from '../interfaces/user';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 
 type SignupDto = {
   name: string;
@@ -30,7 +31,7 @@ type AuthResp = {
   providedIn: 'root'
 })
 export class AuthService {
-  private readonly API_URL = 'http://localhost:3000/auth';
+  private readonly API_URL = environment.API_BASE_URL + '/auth';
   private localStorageJwtPath = 'authjot';
   private currentUser?: User;
   isLoggedIn: boolean = false;
