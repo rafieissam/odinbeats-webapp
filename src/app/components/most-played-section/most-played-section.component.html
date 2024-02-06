@@ -8,7 +8,7 @@
                 <app-loader></app-loader>
             </div>
         } @else {
-            @for (song of mostPlayedSongs; track song.id) {
+            @for (song of mostPlayedSongs | slice:0:7 ; track song.id) {
                 <div class="cursor-pointer" (click)="playSong(song)">
                     <div class="bg-no-repeat bg-center bg-cover w-36 h-36 bg-[var(--primary-dark)] rounded-md" [ngStyle]="{ backgroundImage: 'url(\'' + song.image + '\')' }"></div>
                     <div class="text-center mt-2">
