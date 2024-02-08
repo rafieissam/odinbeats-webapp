@@ -8,7 +8,18 @@ You can explore a live demo of the OdinBeats Web App by visiting the following U
 
 [OdinBeats Web App Demo](https://odinbeats-webapp.onrender.com)
 
+You can use the following credentials to view the app without creating an account.
+```
+Email: test_user@gmail.com
+Password: New_Pass123
+```
+
 N.B. This site and its API are both hosted on Render.com and it might take some time to start up and get responses from the API if it hasn't been used in a while.
+
+## My Todo List
+
+- Responsive Design
+- Login to have: `Show Password` icon
 
 ## Features
 
@@ -77,12 +88,6 @@ To run the OdinBeats web application locally, follow these steps:
 
 ### Shortcuts Menu
 ![Shortcuts Menu](screenshots/shortcuts-menu.png)
-
-## My Todo List
-
-- Responsive Design
-- Toasts Messages (added/removed to playlist, liked/unliked)
-- Login to have: `Show Password` icon
 
 ## Future Work
 

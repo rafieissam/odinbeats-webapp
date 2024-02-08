@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable, concatMap, switchMap, tap } from 'rxjs';
 import { Song } from '../interfaces/song';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
+import { SnackbarService } from './snackbar.service';
 
 type GetSongsDto = {
   text?: string;
@@ -24,6 +25,7 @@ export class SongApiService {
 
   constructor(
     private http: HttpClient,
+    private snackbarService: SnackbarService,
   ) { }
 
   registerPlay(songId: string) {
@@ -69,10 +71,20 @@ export class SongApiService {
   }
 
   likeSong(songId: string): Observable<any> {
-    return this.http.patch<any>(`${this.API_URL}/${songId}/like`, {}).pipe(switchMap(this.refreshLikedSongs.bind(this)));
+    return this.http.patch<any>(`${this.API_URL}/${songId}/like`, {}).pipe(
+      tap(() => {
+        this.snackbarService.showMessage('Added song to likes');
+      }),
+      switchMap(this.refreshLikedSongs.bind(this))
+    );
   }
 
   unlikeSong(songId: string): Observable<any> {
-    return this.http.patch<any>(`${this.API_URL}/${songId}/unlike`, {}).pipe(switchMap(this.refreshLikedSongs.bind(this)));
+    return this.http.patch<any>(`${this.API_URL}/${songId}/unlike`, {}).pipe(
+      tap(() => {
+        this.snackbarService.showMessage('Removed song from likes');
+      }),
+      switchMap(this.refreshLikedSongs.bind(this))
+    );
   }
 }

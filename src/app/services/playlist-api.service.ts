@@ -4,6 +4,7 @@ import { Playlist } from '../interfaces/playlist';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
+import { SnackbarService } from './snackbar.service';
 
 type PlaylistUpdateDto = {
   name: string;
@@ -23,6 +24,7 @@ export class PlaylistApiService {
   constructor(
     private http: HttpClient,
     private router: Router,
+    private snackbarService: SnackbarService,
   ) { }
 
   watchAll(): Observable<Playlist[]> {
@@ -117,10 +119,20 @@ export class PlaylistApiService {
   }
 
   addSongToPlaylist(playlistId: string, songId: string) {
-    return this.http.patch<any>(`${this.API_URL}/${playlistId}/add-song`, { songId }).pipe(switchMap(this.refreshAll.bind(this)));
+    return this.http.patch<any>(`${this.API_URL}/${playlistId}/add-song`, { songId }).pipe(
+      tap(() => {
+        this.snackbarService.showMessage('Added song to playlist');
+      }),
+      switchMap(this.refreshAll.bind(this))
+    );
   }
 
   removeSongFromPlaylist(playlistId: string, songId: string) {
-    return this.http.patch<any>(`${this.API_URL}/${playlistId}/remove-song`, { songId }).pipe(switchMap(this.refreshAll.bind(this)));
+    return this.http.patch<any>(`${this.API_URL}/${playlistId}/remove-song`, { songId }).pipe(
+      tap(() => {
+        this.snackbarService.showMessage('Removed song from playlist');
+      }),
+      switchMap(this.refreshAll.bind(this))
+    );
   }
 }
