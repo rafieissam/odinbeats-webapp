@@ -7,13 +7,13 @@
             <router-outlet></router-outlet>
         </div>
         @if (showingQueue) {
-            <app-song-queue class="fixed right-0 top-0 bottom-[7rem] left-[18rem] z-10"></app-song-queue>
+            <app-song-queue class="fixed right-0 top-0 bottom-[10rem] md:bottom-[7rem] left-0 md:left-[18rem] z-10"></app-song-queue>
         }
         @if (hasSong) {
-            <app-music-player class="fixed right-0 bottom-0 left-[18rem] z-10"></app-music-player>
+            <app-music-player class="fixed right-0 bottom-12 md:bottom-0 left-0 lg:left-[18rem] z-10"></app-music-player>
         }
     </div>
-    <div class="md:hidden z-20">
+    <div class="md:hidden z-10">
         <app-bottombar></app-bottombar>
     </div>
 </div>  
