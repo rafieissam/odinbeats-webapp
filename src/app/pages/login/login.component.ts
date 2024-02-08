@@ -4,12 +4,15 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { LogoComponent } from '../../components/logo/logo.component';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import { jamEyeF, jamEyeCloseF } from '@ng-icons/jam-icons';
 
 type FormInput = {
   name: string;
   placeholder: string;
   type: string;
   validator: ValidatorFn | null;
+  showingPass?: boolean,
 };
 
 @Component({
@@ -19,6 +22,10 @@ type FormInput = {
     CommonModule,
     LogoComponent,
     ReactiveFormsModule,
+    NgIconComponent,
+  ],
+  providers: [
+    provideIcons({ jamEyeF, jamEyeCloseF })
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
@@ -26,13 +33,13 @@ type FormInput = {
 export class LoginComponent implements OnInit {
   loginFormInputs: FormInput[] = [
     { name: 'email', placeholder: 'Email', type: 'text', validator: Validators.compose([Validators.required, Validators.email]) },
-    { name: 'password', placeholder: 'Password', type: 'password', validator: Validators.compose([Validators.required, Validators.minLength(8)]) },
+    { name: 'password', placeholder: 'Password', type: 'password', validator: Validators.compose([Validators.required, Validators.minLength(8)]), showingPass: false },
   ];
   registerFormInputs: FormInput[] = [
     { name: 'name', placeholder: 'Nickname', type: 'text', validator: Validators.compose([Validators.required, Validators.minLength(3)]) },
     { name: 'email', placeholder: 'Email', type: 'text', validator: Validators.compose([Validators.required, Validators.email]) },
-    { name: 'password', placeholder: 'Password', type: 'password', validator: Validators.compose([Validators.required, Validators.minLength(8)]) },
-    { name: 'confirm_password', placeholder: 'Confirm Password', type: 'password', validator: Validators.required },
+    { name: 'password', placeholder: 'Password', type: 'password', validator: Validators.compose([Validators.required, Validators.minLength(8)]), showingPass: false },
+    { name: 'confirm_password', placeholder: 'Confirm Password', type: 'password', validator: Validators.required, showingPass: false },
   ];
 
   formInputs: FormInput[] = [];
@@ -76,6 +83,12 @@ export class LoginComponent implements OnInit {
     this.isRegistering = true;
     this.formInputs = this.registerFormInputs;
     this.genForm();
+  }
+
+  toggleShowPass(event: MouseEvent, inputName: string) {
+    event.stopPropagation();
+    let input = this.formInputs.filter(i => i.name == inputName)[0];
+    input.showingPass = !input.showingPass;
   }
 
   trackErrors() {

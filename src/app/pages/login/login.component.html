@@ -8,7 +8,16 @@
         <app-logo></app-logo>
         <div class="mt-8 space-y-4 w-full flex flex-col items-center">
             @for (input of formInputs; track input.name) {
-                <input [formControlName]="input.name" (input)="trackErrors()" class="w-2/3 max-w-auto text-sm text-slate-700 rounded-sm leading-8 px-4 bg-[var(--primary-light)]" [placeholder]="input.placeholder" [type]="input.type" />
+                <div class="w-2/3">
+                    <input class="w-full max-w-auto text-sm text-slate-700 rounded-sm leading-8 px-4 bg-[var(--primary-light)]"
+                        [formControlName]="input.name"
+                        [placeholder]="input.placeholder"
+                        [type]="input.type == 'password' ? (input.showingPass ? 'text' : 'password') : input.type"
+                        (input)="trackErrors()">
+                    @if (input.type == 'password') {
+                        <ng-icon [name]="input.showingPass ? 'jamEyeCloseF' : 'jamEyeF'" color="var(--primary-red)" class="absolute right-2 top-2 cursor-pointer" (click)="toggleShowPass($event, input.name)"></ng-icon>
+                    }
+                </div>
             }
         </div>
         @if (errorMsg) {

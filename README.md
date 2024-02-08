@@ -19,7 +19,6 @@ N.B. This site and its API are both hosted on Render.com and it might take some 
 ## My Todo List
 
 - Responsive Design
-- Login to have: `Show Password` icon
 
 ## Features
 
