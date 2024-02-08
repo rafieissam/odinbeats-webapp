@@ -11,9 +11,9 @@
                 <app-loader></app-loader>
             </div>
         } @else {
-            @for (playlist of (playlists | slice:0:3); track playlist.id) {
+            @for (playlist of (playlists | slice:0:2); track playlist.id) {
                 <div class="cursor-pointer" [routerLink]="'library/' + playlist.id">
-                    <div class="bg-no-repeat shadow-sm bg-center bg-cover w-48 h-48 bg-[var(--primary-dark)] rounded-md" [ngStyle]="{ backgroundImage: 'url(\'' + playlist.image + '\')' }"></div>
+                    <div class="bg-no-repeat shadow-sm bg-center bg-cover w-32 h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 bg-[var(--primary-dark)] rounded-md" [ngStyle]="{ backgroundImage: 'url(\'' + playlist.image + '\')' }"></div>
                     <div class="mt-2">
                         <div class="text-slate-200 text-sm font-bold">{{ playlist.name }}</div>
                         <div class="text-slate-500 text-xs">{{ (playlist?.totalDuration || 0) | durationToString }}</div>

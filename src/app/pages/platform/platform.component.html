@@ -1,9 +1,9 @@
 <div class="min-h-screen flex">
-    <div class="min-w-72">
+    <div class="hidden md:block min-w-72">
         <app-sidebar></app-sidebar>
     </div>
     <div class="w-full">
-        <div class="py-8 px-10 overflow-y-auto" [ngStyle]="{ maxHeight: hasSong ? 'calc(100vh - 7rem)' : '100vh' }">
+        <div class="pt-6 pb-[4.5rem] px-6 md:py-8 md:px-10 overflow-y-auto" [ngStyle]="{ maxHeight: hasSong ? 'calc(100vh - 7rem)' : '100vh' }">
             <router-outlet></router-outlet>
         </div>
         @if (showingQueue) {
@@ -12,5 +12,8 @@
         @if (hasSong) {
             <app-music-player class="fixed right-0 bottom-0 left-[18rem] z-10"></app-music-player>
         }
+    </div>
+    <div class="md:hidden z-20">
+        <app-bottombar></app-bottombar>
     </div>
 </div>  

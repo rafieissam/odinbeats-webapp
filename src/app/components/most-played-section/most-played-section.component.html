@@ -2,21 +2,23 @@
     Most Played
 </div>
 <div class="mt-6">
-    <div class="flex space-x-4">
-        @if (isLoading) {
-            <div class="flex justify-center py-20 w-full">
-                <app-loader></app-loader>
-            </div>
-        } @else {
-            @for (song of mostPlayedSongs | slice:0:7 ; track song.id) {
-                <div class="cursor-pointer" (click)="playSong(song)">
-                    <div class="bg-no-repeat bg-center bg-cover w-36 h-36 bg-[var(--primary-dark)] rounded-md" [ngStyle]="{ backgroundImage: 'url(\'' + song.image + '\')' }"></div>
-                    <div class="text-center mt-2">
-                        <div class="text-slate-200 text-sm font-bold">{{ song.name }}</div>
-                        <div class="text-slate-500 text-xs">{{ song.artist }}</div>
+    @if (isLoading) {
+        <div class="flex justify-center py-20 w-full">
+            <app-loader></app-loader>
+        </div>
+    } @else {
+        <div class="-m-2 flex flex-wrap">
+            @for (song of mostPlayedSongs | slice:0:6; track song.id) {
+                <div class="p-2">
+                    <div class="cursor-pointer w-20 md:w-24 lg:w-[7.5rem] xl:w-[8.5rem]" (click)="playSong(song)">
+                        <div class="bg-no-repeat bg-center bg-cover w-full h-20 md:h-24  lg:h-[7.5rem] xl:h-[8.5rem] bg-[var(--primary-dark)] rounded-md" [ngStyle]="{ backgroundImage: 'url(\'' + song.image + '\')' }"></div>
+                        <div class="text-center mt-2">
+                            <div class="text-slate-200 text-xs lg:text-sm font-bold">{{ song.name }}</div>
+                            <div class="hidden md:block text-slate-500 text-xs">{{ song.artist }}</div>
+                        </div>
                     </div>
                 </div>
             }
-        }
-    </div>
+        </div>
+    }
 </div>

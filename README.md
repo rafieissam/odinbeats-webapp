@@ -16,10 +16,6 @@ Password: New_Pass123
 
 N.B. This site and its API are both hosted on Render.com and it might take some time to start up and get responses from the API if it hasn't been used in a while.
 
-## My Todo List
-
-- Responsive Design
-
 ## Features
 
 - **Authentication**: Users can register and log in to access the application's features.

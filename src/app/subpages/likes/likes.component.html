@@ -1,9 +1,10 @@
 <div class="flex items-start justify-between">
     <div>
-        <div class="flex items-start font-bold text-white rounded-md min-w-64 max-w-fit min-h-12 text-4xl" [ngStyle]="{ backgroundColor: isLoading ? 'var(--secondary-dark)' : 'unset' }">
-            {{ isLoading || !fakePlaylist ? "" : fakePlaylist.name }}
+        <div class="flex items-start font-bold rounded-md max-w-fit min-h-12 text-2xl md:text-4xl" [ngStyle]="{ backgroundColor: isLoading ? 'var(--secondary-dark)' : 'unset', color: isLoading ? 'transparent' : 'white' }">
+            {{ isLoading || !fakePlaylist ? "Playlist #0" : fakePlaylist.name }}
+
             @if (!isLoading) {
-                <div class="ml-5 cursor-pointer flex justify-center items-center h-12 w-12 rounded-full bg-[var(--primary-red)]" (click)="startAtSong(0)">
+                <div class="ml-5 cursor-pointer hidden md:flex justify-center items-center h-12 w-12 rounded-full bg-[var(--primary-red)]" (click)="startAtSong(0)">
                     <ng-icon name="jamPlay" size="2rem"></ng-icon>
                 </div>
             }
@@ -37,7 +38,14 @@
     </div>
     <app-user-pill></app-user-pill>
 </div>
-<div class="mt-10">
+<div class="flex md:hidden justify-end mt-5">
+    @if (!isLoading) {
+        <div class="ml-5 flex cursor-pointer justify-center items-center h-12 w-12 rounded-full bg-[var(--primary-red)]" (click)="startAtSong(0)">
+            <ng-icon name="jamPlay" size="2rem"></ng-icon>
+        </div>
+    }
+</div>
+<div class="mt-5 md:mt-10">
     <div class="flex items-center text-slate-400 text-xs border-b-2 border-slate-600 py-2 px-2">
         <div class="w-1/3">Title</div>
         <div class="w-1/3">Artist</div>    

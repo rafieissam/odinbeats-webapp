@@ -9,6 +9,7 @@ import { PlaylistApiService } from '../../services/playlist-api.service';
 import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 import { MusicPlayerComponent } from '../../components/music-player/music-player.component';
 import { SongQueueComponent } from '../../components/song-queue/song-queue.component';
+import { BottombarComponent } from '../../components/bottombar/bottombar.component';
 
 @Component({
   selector: 'app-platform',
@@ -17,6 +18,7 @@ import { SongQueueComponent } from '../../components/song-queue/song-queue.compo
     CommonModule,
     RouterOutlet,
     SidebarComponent,
+    BottombarComponent,
     MusicPlayerComponent,
     SongQueueComponent,
   ],
