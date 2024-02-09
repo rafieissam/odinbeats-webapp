@@ -49,7 +49,7 @@ export class MusicPlayerService {
       if (!this.audioPlayer) return;
       this.currentTime = Math.floor(this.audioPlayer.currentTime);
     };
-    this.audioPlayer.onended = this.next;
+    this.audioPlayer.onended = this.next.bind(this);
     this.volume = 100 * this.audioPlayer.volume;
   }
 
